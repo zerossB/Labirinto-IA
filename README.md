@@ -5,6 +5,7 @@ Geração de solução dado um labirinto, utilizando métodos de buscas.
 ## Metodos de Buscas
 
 Utilizamos os seguintes metodos de buscas:
+
 - [Busca em Largura](https://pt.wikipedia.org/wiki/Busca_em_largura)
 - [Busca em Profundidade](https://pt.wikipedia.org/wiki/Busca_em_profundidade)
 - [Custo Uniforme](http://conteudo.icmc.usp.br/pessoas/sandra/G2_t2/Busca.html)
