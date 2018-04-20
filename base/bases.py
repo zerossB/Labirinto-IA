@@ -4,7 +4,7 @@
 import time
 
 from queue import Queue, LifoQueue
-from .functions import isPreto, getAdjacentes, printSpecs
+from .functions import isPreto, getAdjacentes, printSpecs, addQueue
 
 
 def buscaEmProfundidade(start, end, pixels):
@@ -22,6 +22,7 @@ def buscaEmProfundidade(start, end, pixels):
     queue = LifoQueue()
     queue.put([start])
 
+    full_path = list()
     count = 1
 
     while not queue.empty():
@@ -31,21 +32,22 @@ def buscaEmProfundidade(start, end, pixels):
         # print(pixel)
 
         if pixel == end:
-            return path, count
+            return path, count, full_path
 
         for adjacente in getAdjacentes(pixel):
             x, y = adjacente
+
+            full_path.append(adjacente)
+
             try:
                 if isPreto(pixels[x, y]):
-                    #print(" ", x, y)
+                    # print(" ", x, y)
                     pixels[x, y] = (0, 255, 0, 255)
-                    novo_path = list(path)
-                    novo_path.append(adjacente)
-                    queue.put(novo_path)
+                    queue.put(addQueue(path, adjacente))
             except IndexError:
                 pass
         count = count + 1
-    print("A fila esgotou-se. Nenhuma resposta foi encontrada.")
+    print("A pilha esgotou-se. Nenhuma resposta foi encontrada.")
 
 
 def buscaEmLargura(start, end, pixels):
@@ -63,6 +65,8 @@ def buscaEmLargura(start, end, pixels):
     queue = Queue()
     queue.put([start])  # Envolvendo a tupla inicial em uma lista
 
+    full_path = list()
+
     count = 1
 
     while not queue.empty():
@@ -73,17 +77,18 @@ def buscaEmLargura(start, end, pixels):
 
         # Se eu cheguei no final, retorno o caminho
         if pixel == end:
-            return path, count
+            return path, count, full_path
 
         for adjacente in getAdjacentes(pixel):
             x, y = adjacente
+
+            full_path.append(adjacente)
+
             try:
                 if isPreto(pixels[x, y]):
-                    #print(" ", x, y)
+                    # print(" ", x, y)
                     pixels[x, y] = (0, 255, 0, 255)
-                    novo_path = list(path)
-                    novo_path.append(adjacente)
-                    queue.put(novo_path)
+                    queue.put(addQueue(path, adjacente))
             except IndexError:
                 pass
         count = count + 1
@@ -98,10 +103,10 @@ def buscaEmLargura(start, end, pixels):
 def buscaProfundidade(inicio, fim, base):
     print("\n\nIniciando Busca em Profundidade")
     t_ini = time.time()
-    path, count = buscaEmProfundidade(inicio, fim, base)
+    path, count, full_path = buscaEmProfundidade(inicio, fim, base)
     t_fim = time.time()
 
-    printSpecs(t_ini, t_fim, "Profundidade", path, count)
+    printSpecs(t_ini, t_fim, "Largura", path, count, full_path)
 
     return path
 
@@ -109,9 +114,9 @@ def buscaProfundidade(inicio, fim, base):
 def buscaLargura(inicio, fim, base):
     print("\n\nIniciando Busca em Largura")
     t_ini = time.time()
-    path, count = buscaEmLargura(inicio, fim, base)
+    path, count, full_path = buscaEmLargura(inicio, fim, base)
     t_fim = time.time()
 
-    printSpecs(t_ini, t_fim, "Largura", path, count)
+    printSpecs(t_ini, t_fim, "Largura", path, count, full_path)
 
-    return path
+    return path, full_path

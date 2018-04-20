@@ -12,12 +12,12 @@ def main():
 
     inicio, fim = getInicioEFim(base_image, base_pixels)
 
-    path = buscaLargura(inicio, fim, base_pixels)
-    geraResolucao(path, "Largura")
+    path, full_path = buscaLargura(inicio, fim, base_pixels)
+    geraResolucao(path, "Largura", full_path, True)
 
     base_image, base_pixels = loadImages("labirintos/labirinto.png")
     path = buscaProfundidade(inicio, fim, base_pixels)
-    geraResolucao(path, "Profundidade", True)
+    geraResolucao(path, "Profundidade", full_path, True)
 
 
 if __name__ == '__main__':
