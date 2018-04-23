@@ -16,7 +16,7 @@ def main():
     geraResolucao(path, "Largura", full_path, True)
 
     base_image, base_pixels = loadImages("labirintos/labirinto.png")
-    path = buscaProfundidade(inicio, fim, base_pixels)
+    path, full_path = buscaProfundidade(inicio, fim, base_pixels)
     geraResolucao(path, "Profundidade", full_path, True)
 
 

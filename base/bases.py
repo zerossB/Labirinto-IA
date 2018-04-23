@@ -73,8 +73,6 @@ def buscaEmLargura(start, end, pixels):
         path = queue.get()
         pixel = path[-1]
 
-        # print(pixel)
-
         # Se eu cheguei no final, retorno o caminho
         if pixel == end:
             return path, count, full_path
@@ -87,7 +85,6 @@ def buscaEmLargura(start, end, pixels):
             try:
                 if isPreto(pixels[x, y]):
                     # print(" ", x, y)
-                    pixels[x, y] = (0, 255, 0, 255)
                     queue.put(addQueue(path, adjacente))
             except IndexError:
                 pass
@@ -108,7 +105,7 @@ def buscaProfundidade(inicio, fim, base):
 
     printSpecs(t_ini, t_fim, "Largura", path, count, full_path)
 
-    return path
+    return path, full_path
 
 
 def buscaLargura(inicio, fim, base):
