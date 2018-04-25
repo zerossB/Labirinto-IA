@@ -1,4 +1,4 @@
-from base.graph import Grafo
+from base.grafos.grafo import Grafo
 
 if __name__ == '__main__':
 

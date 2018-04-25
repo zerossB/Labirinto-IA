@@ -2,11 +2,13 @@ from PIL import Image
 
 
 from base.functions import loadImages, isPreto, getInicioEFim
-from base.grafo import Linha
 
 
 class Quadrado(object):
+
     def __init__(self, x_ini, y_ini):
+        self.passei = False
+
         self.dsX = 0
         self.dsY = 0
 
@@ -18,17 +20,6 @@ class Quadrado(object):
 
         self.eiX = x_ini
         self.eiY = y_ini
-
-    def isNode(self, pixels):
-        count = 0
-
-        if isPreto(pixels[self.esX, self.esY]) and isPreto(pixels[self.dsX, self.dsY]):
-            #Cima
-            pass
-
-        if isPreto(pixels[self.eiX, self.eiY]) and isPreto(pixels[self.diX, self.diY]):
-            #Baixo
-            pass
 
     def moveCima(self, move=-1):
         self.diX = self.dsX
@@ -78,19 +69,20 @@ class Quadrado(object):
         return ""
 
 
+def mapMaze(self, pixels):
+    pass
+
+
 def main():
     base, pixels = loadImages('./labirintos/labirinto.png')
-    incio, fim = getInicioEFim(base, pixels)
+    inicio, fim = getInicioEFim(base, pixels)
 
-    base = Quadrado(incio[0], incio[1])
-    str(base)
+    graph = Quadrado(inicio[0], inicio[1])
 
-    count = 1
-
-    while isPreto(pixels[base.eiX, base.eiY]) and isPreto(pixels[base.diX, base.diY]):
-        base.moveBaixo()
-        str(base)
-        count = count + 1
+    # while isPreto(pixels[graph.eiX, graph.eiY]) and isPreto(pixels[graph.diX, graph.diY]):
+    #     graph.moveBaixo()
+    #     str(graph)
+    #     count = count + 1
 
     print("Contador: ", count)
 
