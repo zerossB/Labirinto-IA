@@ -22,12 +22,10 @@ if __name__ == '__main__':
     g.add_aresta('e', 'f', 9)
 
     for v in g:
-        for w in v.get_conexoes():
+        for w in v.get_connections():
             vid = v.get_id()
             wid = w.get_id()
-            print('( %s , %s, %3d)' % (vid, wid, v.get_custo(w)))
-    
-    print('')
+            print('( %s , %s, %3d)' % (vid, wid, v.get_peso(w)))
 
     for v in g:
         print('g.vert_dict[%s] = %s' % (v.get_id(), g.vertices[v.get_id()]))
