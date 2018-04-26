@@ -70,7 +70,7 @@ class Quadrado(object):
 
 
 def mapMaze(self, pixels):
-    pass
+    path = []
 
 
 def main():
@@ -79,12 +79,23 @@ def main():
 
     graph = Quadrado(inicio[0], inicio[1])
 
+    pretos = []
+
+    for x in range(0, base.width):
+        for y in range(0, base.height):
+            if isPreto(pixels[x, y]):
+                pretos.append((x, y))
+
+    count = 0
+    pixel_1 = pretos[0]
+    pixel_2 = pretos[1]
+
     # while isPreto(pixels[graph.eiX, graph.eiY]) and isPreto(pixels[graph.diX, graph.diY]):
     #     graph.moveBaixo()
     #     str(graph)
     #     count = count + 1
 
-    print("Contador: ", count)
+    # print("Contador: ", count)
 
 
 if __name__ == '__main__':
