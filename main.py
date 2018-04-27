@@ -1,25 +1,40 @@
-import sys
+import time
 
+import numpy as np
 from PIL import Image
 
-from base.bases import buscaLargura, buscaProfundidade
-from base.functions import getInicioEFim, geraResolucao, loadImages
+import base.funcoes as fn
+from base.grafo import Graph_state
 
 
 def main():
-    # base_image = Image.open(sys.argv[1])
-    base_image, base_pixels = loadImages("labirintos/labirinto.png")
+    t0 = time.time()
 
-    inicio, fim = getInicioEFim(base_image, base_pixels)
+    #img_data = load_image('4 by 4 orthogonal maze.png')
+    img_data = fn.load_image('labirintos/labirinto.png')
+    #img_data = load_image('100 by 100 orthogonal maze.png')
 
-    path, full_path = buscaLargura(inicio, fim, base_pixels)
-    geraResolucao(path, "Largura", full_path, True)
+    l_entrada, c_entrada = fn.find_entry(img_data)
+    lex, cex = fn.find_exit(img_data)
+    objective = (lex, cex)
+    print("entrada: ", l_entrada, c_entrada)
+    print("saida: ", objective)
+    start_point = Graph_state(l_entrada, c_entrada, True)
+    start_point.isgoal(objective)
+    fn.find_next_intersection(img_data, start_point, fn.find_dir(
+        img_data, l_entrada, c_entrada), objective)
+    total_state = fn.count_state(start_point, 1)
 
-    base_image, base_pixels = loadImages("labirintos/labirinto.png")
-    path, full_path = buscaProfundidade(inicio, fim, base_pixels)
-    geraResolucao(path, "Profundidade", full_path, True)
+    print("total states: %d" % total_state)
+    if total_state < 500:
+        print(fn.print_states(start_point, "-> "))
+    else:
+        print("muitos estados para imprimir...")
+    print("tempo de pre-processamento: %2.5f sec" % (time.time()-t0))
+
+    fn.draw_path(img_data, start_point)
+    fn.save_image(img_data, 'resolv/solve.png')
 
 
 if __name__ == '__main__':
-    # https://stackoverflow.com/a/13174351
     main()
