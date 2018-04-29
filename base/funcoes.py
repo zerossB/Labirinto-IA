@@ -4,12 +4,13 @@ from PIL import Image
 
 from base.grafo import Graph_state
 
+
 def load_image(infilename):
     """
     Carrego minha imagem e a transformo em uma matriz de 32bits
     """
     img = Image.open(infilename)
-    impixels = img.load()
+    # impixels = img.load()
     # img.show()
     # print(impixels[0,0])
     print(img.getbands())

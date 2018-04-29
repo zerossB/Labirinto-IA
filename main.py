@@ -19,8 +19,10 @@ def main():
     objective = (lex, cex)
     print("entrada: ", l_entrada, c_entrada)
     print("saida: ", objective)
+    
     start_point = Graph_state(l_entrada, c_entrada, True)
     start_point.isgoal(objective)
+
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
     total_state = fn.count_state(start_point, 1)
