@@ -5,7 +5,7 @@ from PIL import Image
 
 import base.funcoes as fn
 from base.grafo import Graph_state
-from base.buscas import buscaLargura
+from base.buscas import buscaLargura, buscaProfundidade
 
 
 def main():
@@ -27,7 +27,11 @@ def main():
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
 
-    buscaLargura(img_data, start_point, objective)
+    path = buscaLargura(img_data, start_point)
+    print(len(path))
+
+    path = buscaProfundidade(img_data, start_point)
+    print(len(path))
 
     # total_state = fn.count_state(start_point, 1)
 
