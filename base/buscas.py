@@ -20,8 +20,6 @@ def buscaLargura(data, estado_pai, objective):
         # Se eu cheguei no final, retorno o caminho
         if path.goal:
             return path, count, full_path
-        
-        print(path.column, path.line)
 
         for adjacente in path.children:
             x = adjacente.column
@@ -29,9 +27,8 @@ def buscaLargura(data, estado_pai, objective):
             full_path.append(adjacente)
 
             if not adjacente in marcado:
-                print(" ", x, y)
                 marcado.append(adjacente)
                 queue.put(adjacente)
-            
+
         count = count + 1
     print("A fila esgotou-se. Nenhuma resposta foi encontrada.")

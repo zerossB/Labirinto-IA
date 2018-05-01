@@ -4,10 +4,29 @@ from PIL import Image
 
 from base.grafo import Graph_state
 
+
 def addQueue(path, pixel):
     novo_path = list(path)
     novo_path.append(pixel)
     return novo_path
+
+
+def geraResolucao(path, name, full_path=[], show=False):
+    """
+        Pego a minha solução e coloco a linha vermelha
+            no caminho correto
+    """
+    data = load_image("labirintos/labirinto.png")
+
+    for posicao in full_path:
+        data[posicao.line][posicao.column] = [255, 0, 255, 255]
+
+    # for posicao in path:
+    #     data[posicao.line][posicao.column] = [255, 0, 0, 255]
+
+    name_file = "Resolucao-"+name+".png"
+    save_image(data, "resolv/"+name_file)
+
 
 def load_image(infilename):
     """

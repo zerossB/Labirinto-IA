@@ -29,6 +29,8 @@ def main():
 
     path, count, full_path = buscaLargura(img_data, start_point, objective)
 
+    fn.geraResolucao(path, "Largura", full_path, True)
+
     # total_state = fn.count_state(start_point, 1)
 
     # print("total states: %d" % total_state)
