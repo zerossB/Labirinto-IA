@@ -1,34 +1,33 @@
 from base.funcoes import addQueue
 from queue import Queue, LifoQueue
 import numpy as np
+import base.funcoes as fn
 
 
 def buscaLargura(data, estado_pai, objective):
-    queue = Queue()
-    queue.put(estado_pai)  # Envolvendo a tupla inicial em uma lista
+    cor = {}
+    pred = {}
+    d = {}
 
-    full_path = list()
-    marcado = []
+    for v in fn.list_state(estado_pai, []):
+        d[v] = np.inf
+        cor[v] = 'branco'  # branco cinza e preto
+        pred[v] = None
 
-    count = 1
+    cor[estado_pai] = 'cinza'
+    d[estado_pai] = 0
 
-    while not queue.empty():
-        path = queue.get()
+    Q = [estado_pai]
 
-        marcado.append(path)
+    while Q:
+        u = Q.pop(0)
+        for v in u.children:
+            if cor[v] == 'branco':
+                cor[v] = 'cinza'
+                d[v] = d[u] + 1
+                pred[v] = u
 
-        # Se eu cheguei no final, retorno o caminho
-        if path.goal:
-            return path, count, full_path
+                Q.append(v)
+        cor[u] = 'preto'
 
-        for adjacente in path.children:
-            x = adjacente.column
-            y = adjacente.line
-            full_path.append(adjacente)
-
-            if not adjacente in marcado:
-                marcado.append(adjacente)
-                queue.put(adjacente)
-
-        count = count + 1
-    print("A fila esgotou-se. Nenhuma resposta foi encontrada.")
+    print(len(pred))

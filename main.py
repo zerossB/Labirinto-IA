@@ -27,9 +27,7 @@ def main():
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
 
-    path, count, full_path = buscaLargura(img_data, start_point, objective)
-
-    fn.geraResolucao(path, "Largura", full_path, True)
+    buscaLargura(img_data, start_point, objective)
 
     # total_state = fn.count_state(start_point, 1)
 
