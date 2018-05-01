@@ -4,6 +4,10 @@ from PIL import Image
 
 from base.grafo import Graph_state
 
+def addQueue(path, pixel):
+    novo_path = list(path)
+    novo_path.append(pixel)
+    return novo_path
 
 def load_image(infilename):
     """
