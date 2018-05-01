@@ -18,21 +18,21 @@ class Graph_state:
     def __str__(self):
         repre = "(%d,%d)" % (self.line, self.column)
         return repre
-    
+
 
 class Aresta(object):
     def __init__(self, g_ini=None, g_fim=None, custo=0):
         self.g_ini = g_ini
         self.g_fim = g_fim
         self.custo = custo
-    
-    def custoAresta(self, g_ini, g_fim):
-        if (g_ini.column == g_fim.column):
-            custo = g_fim.line - g_ini.line
-            return custo
+
+    def custoAresta(self):
+        if (self.g_ini.column == self.g_fim.column):
+            self.custo = self.g_fim.line - self.g_ini.line
+            return self.custo
         else:
-            custo = g_fim.column - g_ini.column
-            return custo
+            self.custo = self.g_fim.column - self.g_ini.column
+            return self.custo
 
 
 # def busca_largura(data, estado_pai):
@@ -41,7 +41,7 @@ class Aresta(object):
 #     resultado = list()
 
 #     visitado.append(estado_pai)
-    
+
 #     if estado_pai in marcado:
 #         marcado.remove(estado_pai)
 #     print("Visitado: %s" % str(estado_pai))
