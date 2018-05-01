@@ -83,6 +83,13 @@ def count_state(root_state, count):
     return count
 
 
+def list_state(root_state, lista):
+    for s in root_state.children:
+        lista.append(s)
+        list_state(s, lista)
+    return lista
+
+
 def print_states(root_state, output):
     if root_state.start:
         output += "R:"+str(root_state) + ";"
