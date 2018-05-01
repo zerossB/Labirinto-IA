@@ -17,17 +17,20 @@ def buscaLargura(data, estado_pai, objective):
     cor[estado_pai] = 'cinza'
     d[estado_pai] = 0
 
-    Q = [estado_pai]
+    Q = Queue()
+    Q.put(estado_pai)
 
-    while Q:
-        u = Q.pop(0)
+    while not Q.empty():
+        u = Q.get()
+
+        if u.goal:
+            return 0
+
         for v in u.children:
             if cor[v] == 'branco':
                 cor[v] = 'cinza'
                 d[v] = d[u] + 1
                 pred[v] = u
 
-                Q.append(v)
+                Q.put(v)
         cor[u] = 'preto'
-
-    print(len(pred))
