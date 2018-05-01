@@ -1,6 +1,6 @@
 import numpy as np
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from base.grafo import Graph_state
 
@@ -40,6 +40,18 @@ def load_image(infilename):
     data = np.asarray(img, dtype="int32")
     print("Image shape: ", data.shape)
     return data
+
+
+def drawLines(data, lines):
+    img = Image.fromarray(np.asarray(
+        np.clip(data, 0, 255), dtype="uint8"), "RGBA")
+    draw = ImageDraw.Draw(img)
+
+    # draw.line(lines, fill=255, width=2)
+    draw.line((0, img.size[1], img.size[0], 0), fill=128, width=2)
+
+    name_file = "Resolucao.png"
+    img.save(name_file)
 
 
 def save_image(npdata, outfilename):

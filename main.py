@@ -33,6 +33,8 @@ def main():
     path = buscaProfundidade(img_data, start_point)
     print(len(path))
 
+    fn.drawLines(img_data, path)
+
     # total_state = fn.count_state(start_point, 1)
 
     # print("total states: %d" % total_state)
