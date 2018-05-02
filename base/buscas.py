@@ -46,7 +46,8 @@ class BuscaLargura(Buscas):
                     Q.put(v)
             cor[u] = 'preto'
 
-        return filter(lambda x: x == 'preto', cor)
+        self.resultado = filter(lambda x: x == 'preto', cor)
+        return self.resultado
 
 
 class BuscaProfundidade(Buscas):
@@ -69,7 +70,8 @@ class BuscaProfundidade(Buscas):
             if cor[v] == 'branco':
                 tempo = self.visit(estado_pai, v, cor, pred, d, f, tempo)
 
-        return filter(lambda x: x == 'preto', cor)
+        self.resultado = filter(lambda x: x == 'preto', cor)
+        return self.resultado
 
     def visit(self, G, s, cor, pred, d, f, tempo):
         tempo = tempo + 1
