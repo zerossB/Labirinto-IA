@@ -27,26 +27,7 @@ def main():
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
 
-    path = buscaLargura(img_data, start_point)
-    print(len(path))
-
-    path = buscaProfundidade(img_data, start_point)
-    print(len(path))
-
-    fn.drawLines(img_data, path)
-
-    # total_state = fn.count_state(start_point, 1)
-
-    # print("total states: %d" % total_state)
-    # if total_state < 500:
-    #     print(fn.print_states(start_point, "-> "))
-    # else:
-    #     print("muitos estados para imprimir...")
-    # print("tempo de pre-processamento: %2.5f sec" % (time.time()-t0))
-
-    # fn.draw_path(img_data, start_point)
-    fn.save_image(img_data, 'resolv/solve.png')
-
+    
 
 if __name__ == '__main__':
     main()
