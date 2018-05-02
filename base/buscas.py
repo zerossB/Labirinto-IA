@@ -14,19 +14,18 @@ class Buscas(object):
 class BuscaLargura(Buscas):
     def __init__(self):
         super().__init__()
+        self.cor = {}
+        self.pred = {}
+        self.d = {}
 
     def search(self, data, estado_pai):
-        cor = {}
-        pred = {}
-        d = {}
-
         for v in fn.list_state(estado_pai, []):
-            d[v] = np.inf
-            cor[v] = 'branco'  # branco cinza e preto
-            pred[v] = None
+            self.d[v] = np.inf
+            self.cor[v] = 'branco'  # branco cinza e preto
+            self.pred[v] = None
 
-        cor[estado_pai] = 'cinza'
-        d[estado_pai] = 0
+        self.cor[estado_pai] = 'cinza'
+        self.d[estado_pai] = 0
 
         Q = Queue()
         Q.put(estado_pai)
@@ -35,56 +34,55 @@ class BuscaLargura(Buscas):
             u = Q.get()
 
             if u.goal:
-                return pred
+                break
 
             for v in u.children:
-                if cor[v] == 'branco':
-                    cor[v] = 'cinza'
-                    d[v] = d[u] + 1
-                    pred[v] = u
+                if self.cor[v] == 'branco':
+                    self.cor[v] = 'cinza'
+                    self.d[v] = self.d[u] + 1
+                    self.pred[v] = u
 
                     Q.put(v)
-            cor[u] = 'preto'
-
-        self.resultado = filter(lambda x: x == 'preto', cor)
+            self.cor[u] = 'preto'
+            
+        self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
         return self.resultado
 
 
 class BuscaProfundidade(Buscas):
     def __init__(self):
         super().__init__()
+        self.cor = {}
+        self.pred = {}
+        self.d = {}
+        self.f = {}
 
     def search(self, data, estado_pai):
-        cor = {}
-        pred = {}
-        d = {}
-        f = {}
-
         tempo = 0
 
         for v in fn.list_state(estado_pai, []):
-            cor[v] = 'branco'  # cores possíveis: branco cinza e preto
-            pred[v] = None
+            self.cor[v] = 'branco'  # self.cores possíveis: branco cinza e preto
+            self.pred[v] = None
 
         for v in fn.list_state(estado_pai, []):
-            if cor[v] == 'branco':
-                tempo = self.visit(estado_pai, v, cor, pred, d, f, tempo)
+            if self.cor[v] == 'branco':
+                tempo = self.visit(estado_pai, v, self.cor, self.pred, self.d, self.f, tempo)
 
-        self.resultado = filter(lambda x: x == 'preto', cor)
+        self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
         return self.resultado
 
     def visit(self, G, s, cor, pred, d, f, tempo):
         tempo = tempo + 1
         d[s] = tempo
-        cor[s] = 'cinza'
+        self.cor[s] = 'cinza'
 
         for v in G.children:
-            if cor[v] == 'branco':
-                pred[v] = s
-                tempo = self.visit(G, v, cor, pred, d, f, tempo)
+            if self.cor[v] == 'branco':
+                self.pred[v] = s
+                tempo = self.visit(G, v, self.cor, self.pred, self.d, self.f, tempo)
 
-        cor[s] = 'preto'
-        tempo = tempo + 1
-        f[s] = tempo
+        self.cor[s] = 'preto'
+        self.tempo = tempo + 1
+        self.f[s] = tempo
 
         return tempo
