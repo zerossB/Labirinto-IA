@@ -44,7 +44,7 @@ class BuscaLargura(Buscas):
 
                     Q.put(v)
             self.cor[u] = 'preto'
-            
+
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
         return self.resultado
 
@@ -61,25 +61,26 @@ class BuscaProfundidade(Buscas):
         tempo = 0
 
         for v in fn.list_state(estado_pai, []):
-            self.cor[v] = 'branco'  # self.cores possíveis: branco cinza e preto
+            # cores possíveis: branco, cinza e preto
+            self.cor[v] = 'branco'
             self.pred[v] = None
 
         for v in fn.list_state(estado_pai, []):
             if self.cor[v] == 'branco':
-                tempo = self.visit(estado_pai, v, self.cor, self.pred, self.d, self.f, tempo)
+                tempo = self.visit(estado_pai, v, tempo)
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
         return self.resultado
 
-    def visit(self, G, s, cor, pred, d, f, tempo):
+    def visit(self, G, s, tempo):
         tempo = tempo + 1
-        d[s] = tempo
+        self.d[s] = tempo
         self.cor[s] = 'cinza'
 
         for v in G.children:
             if self.cor[v] == 'branco':
                 self.pred[v] = s
-                tempo = self.visit(G, v, self.cor, self.pred, self.d, self.f, tempo)
+                tempo = self.visit(G, v, tempo)
 
         self.cor[s] = 'preto'
         self.tempo = tempo + 1
