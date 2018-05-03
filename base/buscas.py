@@ -1,7 +1,9 @@
-from base.funcoes import addQueue
-from queue import Queue, LifoQueue
 import numpy as np
 import base.funcoes as fn
+
+from PIL import Image, ImageDraw
+from queue import Queue, LifoQueue
+from base.funcoes import addQueue
 
 
 class Buscas(object):
@@ -9,6 +11,17 @@ class Buscas(object):
         self.visitado = []
         self.marcado = []
         self.resultado = []
+
+    def drawImage(self, data):
+        img = Image.fromarray(np.asarray(
+            np.clip(data, 0, 255), dtype="uint8"), "RGBA")
+        draw = ImageDraw.Draw(img)
+
+        for key in range(1, len(self.resultado)):
+            pass
+
+        name_file = "Resolucao.png"
+        img.save("resolv/"+name_file)
 
 
 class BuscaLargura(Buscas):

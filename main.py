@@ -33,6 +33,7 @@ def main():
 
     buscaProfundidade = BuscaProfundidade()
     resultado = buscaProfundidade.search(img_data, start_point)
+    buscaProfundidade.drawImage(img_data)
     print(resultado)
 
 if __name__ == '__main__':
