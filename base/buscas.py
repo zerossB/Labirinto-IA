@@ -12,16 +12,13 @@ class Buscas(object):
         self.marcado = []
         self.resultado = []
 
-    def drawImage(self, data):
-        img = Image.fromarray(np.asarray(
-            np.clip(data, 0, 255), dtype="uint8"), "RGBA")
-        draw = ImageDraw.Draw(img)
-
-        for key in range(1, len(self.resultado)):
-            pass
-
-        name_file = "Resolucao.png"
-        img.save("resolv/"+name_file)
+    def drawPoint(self, data, aresta, color):
+        if color == 'branco':
+            data[aresta.line][aresta.column] = [255, 255, 0, 255]
+        elif color == 'cinza':
+            data[aresta.line][aresta.column] = [255, 0, 255, 255]
+        else:
+            data[aresta.line][aresta.column] = [255, 255, 255, 255]
 
 
 class BuscaLargura(Buscas):
@@ -36,9 +33,11 @@ class BuscaLargura(Buscas):
             self.d[v] = np.inf
             self.cor[v] = 'branco'  # branco cinza e preto
             self.pred[v] = None
+            self.drawPoint(data, v, self.cor[v])
 
         self.cor[estado_pai] = 'cinza'
         self.d[estado_pai] = 0
+        self.drawPoint(data, estado_pai, self.cor[estado_pai])
 
         Q = Queue()
         Q.put(estado_pai)
@@ -54,11 +53,14 @@ class BuscaLargura(Buscas):
                     self.cor[v] = 'cinza'
                     self.d[v] = self.d[u] + 1
                     self.pred[v] = u
+                    self.drawPoint(data, v, self.cor[v])
 
                     Q.put(v)
             self.cor[u] = 'preto'
+            self.drawPoint(data, u, self.cor[u])
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
+        fn.save_image(data, "Resolucao-Largura.png")
 
 
 class BuscaProfundidade(Buscas):
@@ -82,7 +84,6 @@ class BuscaProfundidade(Buscas):
                 tempo = self.visit(estado_pai, v, tempo)
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
-        return self.resultado
 
     def visit(self, G, s, tempo):
         tempo = tempo + 1
