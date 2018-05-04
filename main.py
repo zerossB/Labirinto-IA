@@ -27,14 +27,14 @@ def main():
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
 
-    # buscaLargura = BuscaLargura()
-    # resultado = buscaLargura.search(img_data, start_point)
-    # print(resultado,'\n\n')
+    buscaLargura = BuscaLargura()
+    buscaLargura.search(img_data, start_point)
+    print(buscaLargura.resultado,'\n\n')
 
-    buscaProfundidade = BuscaProfundidade()
-    resultado = buscaProfundidade.search(img_data, start_point)
-    buscaProfundidade.drawImage(img_data)
-    print(resultado)
+    # buscaProfundidade = BuscaProfundidade()
+    # resultado = buscaProfundidade.search(img_data, start_point)
+    # buscaProfundidade.drawImage(img_data)
+    # print(resultado)
 
 if __name__ == '__main__':
     main()

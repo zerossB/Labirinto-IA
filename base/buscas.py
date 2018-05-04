@@ -59,7 +59,6 @@ class BuscaLargura(Buscas):
             self.cor[u] = 'preto'
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
-        return self.resultado
 
 
 class BuscaProfundidade(Buscas):
