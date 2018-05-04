@@ -14,11 +14,11 @@ class Buscas(object):
 
     def drawPoint(self, data, aresta, color):
         if color == 'branco':
-            data[aresta.line][aresta.column] = [255, 255, 0, 255]
-        elif color == 'cinza':
-            data[aresta.line][aresta.column] = [255, 0, 255, 255]
-        else:
             data[aresta.line][aresta.column] = [255, 255, 255, 255]
+        elif color == 'cinza':
+            data[aresta.line][aresta.column] = [0, 0, 135, 255]
+        else:
+            data[aresta.line][aresta.column] = [255, 69, 0, 255]
 
 
 class BuscaLargura(Buscas):
