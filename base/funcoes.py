@@ -84,7 +84,7 @@ def save_image(npdata, outfilename):
     #img = Image.fromarray(npdata,"RGBA")
     img = Image.fromarray(np.asarray(
         np.clip(npdata, 0, 255), dtype="uint8"), "RGBA")
-    img.save(outfilename)
+    img.save("resolv/" + outfilename)
 
 
 def find_entry(data):

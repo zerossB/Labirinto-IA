@@ -21,23 +21,13 @@ class Buscas(object):
         #'self aponta para resultado que é um arrayvazio'
         self.resultado = []
 
-    #'Definindo função desenha imagem(chamando o parâmetro{classe buscas}{data})'
-    def drawImage(self, data):
-        #
-        img = Image.fromarray(np.asarray(
-            np.clip(data, 0, 255), dtype="uint8"), "RGBA")
-        #'Renderiza a imagem'
-        draw = ImageDraw.Draw(img)
-
-        #'Para uma chave no intervalo(parâmetro)'
-        for key in range(1, len(self.resultado)):
-            #'Passar'
-            pass
-
-        #'Nome do arquivo'
-        name_file = "Resolucao.png"
-        #'img aponta para salvar()'
-        img.save("resolv/"+name_file)
+    def drawPoint(self, data, aresta, color):
+        if color == 'branco':
+            data[aresta.line][aresta.column] = [255, 255, 255, 255]
+        elif color == 'cinza':
+            data[aresta.line][aresta.column] = [0, 0, 135, 255]
+        else:
+            data[aresta.line][aresta.column] = [255, 69, 0, 255]
 
 
 class BuscaLargura(Buscas):
@@ -52,9 +42,11 @@ class BuscaLargura(Buscas):
             self.d[v] = np.inf
             self.cor[v] = 'branco'  # branco cinza e preto
             self.pred[v] = None
+            self.drawPoint(data, v, self.cor[v])
 
         self.cor[estado_pai] = 'cinza'
         self.d[estado_pai] = 0
+        self.drawPoint(data, estado_pai, self.cor[estado_pai])
 
         Q = Queue()
         Q.put(estado_pai)
@@ -70,12 +62,14 @@ class BuscaLargura(Buscas):
                     self.cor[v] = 'cinza'
                     self.d[v] = self.d[u] + 1
                     self.pred[v] = u
+                    self.drawPoint(data, v, self.cor[v])
 
                     Q.put(v)
             self.cor[u] = 'preto'
+            self.drawPoint(data, u, self.cor[u])
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
-        return self.resultado
+        fn.save_image(data, "Resolucao-Largura.png")
 
 
 class BuscaProfundidade(Buscas):
@@ -99,7 +93,6 @@ class BuscaProfundidade(Buscas):
                 tempo = self.visit(estado_pai, v, tempo)
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
-        return self.resultado
 
     def visit(self, G, s, tempo):
         tempo = tempo + 1
