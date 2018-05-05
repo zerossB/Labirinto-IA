@@ -30,12 +30,13 @@ def main():
     #Imprime na tela meu objetivo=saída.
     print("saida: ", objective, "\n")
 
-    #
     start_point = Graph_state(l_entrada, c_entrada, True)
     start_point.isgoal(objective)
 
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
+
+    fn.count_custo(start_point)
 
     buscaLargura = BuscaLargura()
     buscaLargura.search(img_data, start_point)

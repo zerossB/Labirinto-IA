@@ -122,6 +122,12 @@ def count_state(root_state, count):
     return count
 
 
+def count_custo(root_state):
+    root_state.calcArestas()
+    for filho in root_state.children:
+        count_custo(filho)
+
+
 def list_state(root_state, lista):
     for s in root_state.children:
         lista.append(s)
