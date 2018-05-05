@@ -1,15 +1,24 @@
+#'Importa pacote Numpy e renomeia com NP'
 import numpy as np
+#'Importa módulo base.funcoes e renomeia para FN'
 import base.funcoes as fn
 
+#'De Pillow importar Image, ImageDraw'
 from PIL import Image, ImageDraw
+#'De queue=fila importar Queue, LifoQueue'
 from queue import Queue, LifoQueue
+#'De base.funcoes importar addQueue'
 from base.funcoes import addQueue
 
-
+#'Criando classe chamada Buscas(parâmetro{object}):'
 class Buscas(object):
+    #'Definindo função de inicialização para a classe buscas=self'
     def __init__(self):
+        #'buscas=self aponta para visitado que é um array vazio'
         self.visitado = []
+        #'self aponta para marcado que é um array vazio'
         self.marcado = []
+        #'self aponta para resultado que é um arrayvazio'
         self.resultado = []
 
     def drawPoint(self, data, aresta, color):
