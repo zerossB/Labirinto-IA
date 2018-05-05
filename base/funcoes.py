@@ -11,14 +11,16 @@ def addQueue(path, pixel):
     novo_path.append(pixel)
     return novo_path
 
-
+#Função para gerar uma solução 
 def geraResolucao(path, name, full_path=[], show=False):
     """
         Pego a minha solução e coloco a linha vermelha
             no caminho correto
     """
+    #Carrega meu labirinto e atribui o valor dele em "data"
     data = load_image("labirintos/labirinto.png")
 
+    #
     for posicao in full_path:
         data[posicao.line][posicao.column] = [255, 0, 255, 255]
 
@@ -86,20 +88,23 @@ def save_image(npdata, outfilename):
         np.clip(npdata, 0, 255), dtype="uint8"), "RGBA")
     img.save("resolv/" + outfilename)
 
-
+#Cria função para entrada do labirinto
 def find_entry(data):
     """
         Procuro o inicio do meu labirinto
     """
     # for i in data[0]:
     # print data[0].shape
+    #
     for index, x in enumerate(data[0]):
+        #Se o array de X que é 0 for igual a
         if x[0] == 0:
             # print(index)
             # print(data[2][index][0])
+            #Retornar meu ..... e meu index.
             return 0, index
 
-
+#Cria uma função de saída 
 def find_exit(data):
     """
         Procuro a saida do meu labirinto
@@ -205,6 +210,7 @@ def find_next_intersection(data, act_state, vector, objective):
         # go right
         for x in range(act_state.column+vector[0], wd, vector[0]):
             right, down, left, top = find_dir(data, act_state.line, x)
+            
             if right == 0:  # found an edge
                 new_state = Graph_state(act_state.line, x)
                 new_state.isgoal(objective)

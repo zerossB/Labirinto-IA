@@ -1,16 +1,32 @@
+from * import main.py
+
+#Cria uma classe que vai representar um grafo.
 class Graph_state:
+    #Definindo uma função de inicialização do minha classe grafo. Entra () estão minhas 
+    #variáveis que estão sendo criadas.
     def __init__(self, line, column, start=False):
+        #Definindo minha váriavel "line=linha" da minha classe Graphe_state
         self.line = line
+        #Definindo minha váriavel "column=coluna" da minha classe Graphe_state
         self.column = column
+        #Definindo minha váriavel "start=startar" da minha classe Graphe_state
         self.start = start
+        #Definindo minha váriavel "children=filho" da minha classe Graphe_state
         self.children = []
+        #Definindo minha váriavel "parent=pai" da minha classe Graphe_state
         self.parent = None
+        #Definindo minha váriavel "goal=objetivo" da minha classe Graphe_state
         self.goal = False
 
+    #Definindo uma função para o meu objetivo 
     def isgoal(self, objective):
+        #Se objetivo da minha linha for igual ao objetivo da linha do meu grafo e o objetivo 
+        #da minha coluna for igual ao objetivo da coluna do meu grafo...
         if (objective[0] == self.line) and (objective[1] == self.column):
+            #Quer dizer que o meu objetivo é verdadeiro.
             self.goal = True
-
+    
+    #Definindo função para adicionar meu objetivo no lugar de um filho na fila
     def add(self, child):
         child.parent = self
         self.children.append(child)
@@ -19,8 +35,9 @@ class Graph_state:
         repre = "(%d,%d)" % (self.line, self.column)
         return repre
 
-
+#Cria uma classe aresta e define um objeto nos parametros para utilizar
 class Aresta(object):
+    #Definindo função de start com várieis criadas nos parâmetros.
     def __init__(self, g_ini=None, g_fim=None, custo=0):
         self.g_ini = g_ini
         self.g_fim = g_fim
