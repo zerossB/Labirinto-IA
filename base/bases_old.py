@@ -19,29 +19,43 @@ def buscaEmProfundidade(start, end, pixels):
 
         Fazendo assim, o percorrer do labirinto
     """
+
+    #'cria uma fila vazia que recebe um "LIFO"'
     queue = LifoQueue()
+
+    #'Starta a fila vazia'
     queue.put([start])
 
+    #'Inicia lista vazia e começa a contagem a partir do 1 que seria o elemento pai'    
     full_path = list()
     count = 1
 
+    #'Enquanto a fila não for vazia'
     while not queue.empty():
+        #'Remover item da fila'
         path = queue.get()
-        pixel = path[-1]
 
         # print(pixel)
 
+        #'Verifica se o último item for um pixel'
         if pixel == end:
+            #'retornar esse item, quantidade de grafos analisados e a lista cheia'
             return path, count, full_path
 
+        #'Para adjacente dentro de ObterAdjacente(parâmetro{pixel})'
         for adjacente in getAdjacentes(pixel):
+            #'X e Y são adjacentes'
             x, y = adjacente
 
+            #'Acrescentar Adjacentes X e Y na lista vazia'
             full_path.append(adjacente)
 
+            #'Tentar'
             try:
+                #'Se pixel é preto nos adjacentes X e Y'
                 if isPreto(pixels[x, y]):
                     # print(" ", x, y)
+                    ''
                     pixels[x, y] = (0, 255, 0, 255)
                     queue.put(addQueue(path, adjacente))
             except IndexError:
