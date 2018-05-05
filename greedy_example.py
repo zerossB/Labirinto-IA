@@ -24,7 +24,7 @@ def basic_greedy():
         # nearestNeigbhourCity = min(d_dict[currentCity], key=lambda someList: someList[1] if someList[0] not in tour else 1000000000)  # else part returns some very large number
         # way 2 ends
         tour.append(nearestNeigbhourCity[0])
-        currentCity = nearestNeigbhourCity[0]
+        currentCity = nearestNeigbhourCity[0] 
         distanceTravelled += nearestNeigbhourCity[1]
     print(tour)
     print(distanceTravelled)
