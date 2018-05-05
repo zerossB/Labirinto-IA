@@ -27,12 +27,18 @@ class Aresta(object):
         self.custo = custo
 
     def custoAresta(self):
-        if (self.g_ini.column == self.g_fim.column):
-            self.custo = self.g_fim.line - self.g_ini.line
-            return self.custo
-        else:
-            self.custo = self.g_fim.column - self.g_ini.column
-            return self.custo
+        x = self.g_fim.line - self.g_ini.line
+        y = self.g_fim.column - self.g_ini.column
+
+        self.custo = x if x != 0 else y
+        self.custo = self.custo if self.custo < 0 else self.custo * -1
+
+        # if (self.g_ini.column == self.g_fim.column):
+        #     self.custo = self.g_fim.line - self.g_ini.line
+        #     return self.custo
+        # else:
+        #     self.custo = self.g_fim.column - self.g_ini.column
+        #     return self.custo
 
 
 # def busca_largura(data, estado_pai):
