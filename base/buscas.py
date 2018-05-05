@@ -3,6 +3,8 @@ import numpy as np
 #'Importa módulo base.funcoes e renomeia para FN'
 import base.funcoes as fn
 
+import main
+
 #'De Pillow importar Image, ImageDraw'
 from PIL import Image, ImageDraw
 #'De queue=fila importar Queue, LifoQueue'
@@ -109,3 +111,30 @@ class BuscaProfundidade(Buscas):
         self.f[s] = tempo
 
         return tempo
+
+class BuscaGreedy(Buscas):
+    def __init__(self):
+        super().__init__()
+        self.cor = {}
+        self.pred = {}
+        self.d = {}
+        self.f = {}
+    
+    def search(self, data, objetivo):
+    """
+        Args:
+            s: a list of start times
+            f: a list of finish times
+        Returns:
+            A maximal set of activities that can be scheduled.
+            (We use a list to hold the set.)
+    """
+    assert(len(self.data) == len(self.objetivo))  # each start time must match a finish time
+    n = len(self.data)  # could be len f as well!
+    a = []
+    k = 0
+    for m in range(1, n):
+        if self.data[m] >= self.objetivo[k]:
+            a.append(m)
+            k = m
+    return a
