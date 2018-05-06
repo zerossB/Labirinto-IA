@@ -121,20 +121,20 @@ class BuscaGreedy(Buscas):
         self.f = {}
     
     def search(self, data, objetivo):
-    """
-        Args:
-            s: a list of start times
-            f: a list of finish times
-        Returns:
-            A maximal set of activities that can be scheduled.
-            (We use a list to hold the set.)
-    """
-    assert(len(self.data) == len(self.objetivo))  # each start time must match a finish time
-    n = len(self.data)  # could be len f as well!
-    a = []
-    k = 0
-    for m in range(1, n):
-        if self.data[m] >= self.objetivo[k]:
-            a.append(m)
-            k = m
-    return a
+        """
+            Args:
+                s: a list of start times
+                f: a list of finish times
+            Returns:
+                A maximal set of activities that can be scheduled.
+                (We use a list to hold the set.)
+        """
+        assert(len(data) == len(objetivo))  # each start time must match a finish time
+        n = len(data)  # could be len f as well!
+        a = []
+        k = 0
+        for m in range(1, n):
+            if data[m] >= objetivo[k]:
+                a.append(m)
+                k = m
+        return a
