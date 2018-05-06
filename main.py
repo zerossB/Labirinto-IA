@@ -5,7 +5,7 @@ from PIL import Image
 
 import base.funcoes as fn
 from base.grafo import Graph_state
-from base.buscas import BuscaLargura, BuscaProfundidade
+from base.buscas import BuscaLargura, BuscaProfundidade, BuscaCustoUniforme
 
 #Cria função main
 def main():
@@ -38,14 +38,17 @@ def main():
 
     fn.count_custo(start_point)
 
-    buscaLargura = BuscaLargura()
-    buscaLargura.search(img_data, start_point)
-    print(buscaLargura.resultado,'\n\n')
+    # buscaLargura = BuscaLargura()
+    # buscaLargura.search(img_data, start_point)
+    # print(buscaLargura.resultado,'\n\n')
 
     # buscaProfundidade = BuscaProfundidade()
     # resultado = buscaProfundidade.search(img_data, start_point)
     # buscaProfundidade.drawImage(img_data)
     # print(resultado)
+
+    buscaCustoUniforme = BuscaCustoUniforme()
+    buscaCustoUniforme.search(start_point)
 
 if __name__ == '__main__':
     main()

@@ -49,6 +49,9 @@ class Aresta(object):
         self.g_ini = g_ini
         self.g_fim = g_fim
         self.custo = custo
+    
+    def get_custo(self):
+        return self.custo
 
     # Faço o custo da minha Aresta/Vertice
     def custoAresta(self):
@@ -61,7 +64,7 @@ class Aresta(object):
         self.custo = self.custo + 2
 
     def __str__(self):
-        return str(self.custo)
+        return str(self.g_ini, self.g_fim, self.custo)
 
 
 # def busca_largura(data, estado_pai):
