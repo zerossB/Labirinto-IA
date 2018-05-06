@@ -115,10 +115,6 @@ class BuscaProfundidade(Buscas):
 class BuscaGreedy(Buscas):
     def __init__(self):
         super().__init__()
-        self.cor = {}
-        self.pred = {}
-        self.d = {}
-        self.f = {}
     
     def search(self, data, objetivo):
         """
