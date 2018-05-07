@@ -230,11 +230,6 @@ class BuscaAEstrela(Buscas):
         self.came_from = {}
         self.cost_so_far = {}
 
-    def heuristic(self, a, b):
-        (x1, y1) = a.line, a.column
-        (x2, y2) = b.line, b.column
-        return abs(x1 - x2) + abs(y1 - y2)
-
     def search(self, data, estado_pai):
         frontier = PriorityQueue()
         frontier.put((0, estado_pai))
