@@ -141,11 +141,11 @@ class BuscaCustoUniforme(Buscas):
         super().__init__()
         self.cor = {}
 
-    def search(self, estado_pai):
+    def search(self, data, estado_pai):
         filhos = estado_pai.arestas
         filhos = [filhos[x] for x in filhos]
         filhos = sorted(filhos, key=Aresta.get_custo)
-        filhos = list(reversed(filhos))
+        # filhos = list(reversed(filhos))
 
         # print(filhos)
 
@@ -160,7 +160,10 @@ class BuscaCustoUniforme(Buscas):
         if self.cor[estado_pai] != 'preto':
             for filho in filhos:
                 self.cor[filho] = 'cinza'
-                self.resultado.append(self.search(filho.g_fim))
+                self.resultado.append(self.search(data, filho.g_fim))
+                self.cor[filho] = 'preto'
+                self.drawPoint(data, filho.g_fim, self.cor[filho])
+        # fn.save_image(data, "Resolucao-Custo.png")
 
 
 class BuscaGreedy(Buscas):

@@ -48,7 +48,8 @@ def main():
     # print(resultado)
 
     buscaCustoUniforme = BuscaCustoUniforme()
-    buscaCustoUniforme.search(start_point)
+    buscaCustoUniforme.search(img_data, start_point)
+    fn.save_image(img_data, 'CustoUniforme.png')
 
 if __name__ == '__main__':
     main()
