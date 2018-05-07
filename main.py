@@ -43,9 +43,10 @@ def main():
     fn.drawLines(img_data, buscaLargura.visitado, "Largura")
     print(buscaLargura.resultado,'\n\n')
 
-    # buscaProfundidade = BuscaProfundidade()
-    # buscaProfundidade.search(img_data, start_point)
-    # print(resultado)
+    buscaProfundidade = BuscaProfundidade()
+    buscaProfundidade.search(img_data, start_point)
+    fn.drawLines(img_data, buscaLargura.visitado, "Profundidade")
+    print(buscaLargura.resultado,'\n\n')
 
     # buscaCustoUniforme = BuscaCustoUniforme()
     # buscaCustoUniforme.search(img_data, start_point)

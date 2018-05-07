@@ -110,6 +110,8 @@ class BuscaProfundidade(Buscas):
                 self.pred[v] = s
                 tempo = self.visit(G, v, tempo)
 
+                self.visitado.append((s, v))
+
         self.cor[s] = 'preto'
         self.tempo = tempo + 1
         self.f[s] = tempo
