@@ -47,6 +47,11 @@ class Graph_state:
         return ((self.line, self.column) <
                 (other.line, other.column))
 
+    def __le__(self, other):
+        return ((self.line, self.column) >
+                (other.line, other.column))
+
+
 
 # Cria uma classe aresta e define um objeto nos parametros para utilizar
 class Aresta(object):
@@ -77,38 +82,9 @@ class Aresta(object):
         oX, oY = objetivo[0], objetivo[1]
         gX, gY = self.g_ini.column, self.g_ini.line
 
-        self.custoH = (oX - gX) + (oY - gY)
+        self.custoH = abs(oX - gX) + abs(oY - gY)
         if self.custoH < 0:
             self.custoH = self.custoH * -1
 
     def __str__(self):
         return str(self.g_ini) + " " + str(self.g_fim) + " " + str(self.custo) + " " + str(self.custoH)
-
-
-# def busca_largura(data, estado_pai):
-#     visitado = list()
-#     marcado = list()
-#     resultado = list()
-
-#     visitado.append(estado_pai)
-
-#     if estado_pai in marcado:
-#         marcado.remove(estado_pai)
-#     print("Visitado: %s" % str(estado_pai))
-
-#     for estado_filho in estado_pai.children:
-#         if not estado_filho in marcado and not estado_filho in visitado:
-#             marcado.append(estado_filho)
-#             print("Marcado: %s" % str(estado_filho))
-
-#     for estado_filho in marcado:
-#         busca_largura(data, estado_filho)
-
-#     if estado_pai.goal:
-#         data[estado_pai.line][estado_pai.column] = [255, 0, 0, 255]
-#         resultado.append(estado_pai)
-
-#     for estado_filho in estado_pai.children:
-#         if estado_filho in resultado:
-#             data[estado_pai.line][estado_pai.column] = [255, 0, 0, 255]
-#             resultado.append(estado_pai)

@@ -202,11 +202,11 @@ class BuscaGreedy(Buscas):
         self.name = "Busca Greedy (Gulosa)"
 
     def search(self, data, estado_pai):
-        frontier = ReversePriorityQueue()
+        frontier = PriorityQueue()
         frontier.put((0, estado_pai))
 
         while not frontier.empty():
-            ucs_w, current_node = frontier.get()
+            ucs_w, current_node = frontier.get_nowait()
             self.visitado.append(current_node)
 
             if current_node.goal:
@@ -221,3 +221,38 @@ class BuscaGreedy(Buscas):
                     frontier.put(
                         (custo, filho)
                     )
+
+
+class BuscaAEstrela(Buscas):
+    def __init__(self):
+        super().__init__()
+        self.name = "Busca A* (A Estrela)"
+        self.came_from = {}
+        self.cost_so_far = {}
+
+    def heuristic(self, a, b):
+        (x1, y1) = a.line, a.column
+        (x2, y2) = b.line, b.column
+        return abs(x1 - x2) + abs(y1 - y2)
+
+    def search(self, data, estado_pai):
+        frontier = PriorityQueue()
+        frontier.put((0, estado_pai))
+
+        self.cost_so_far[estado_pai] = 0
+
+        while not frontier.empty():
+            ucs_w, current = frontier.get_nowait()
+            self.visitado.append(current)
+
+            if current.goal:
+                # print("Cheguei no final! ", current_node)
+                return
+
+            for next in current.children:
+                new_cost = ucs_w + current.arestas[next].custo
+                filho = current.arestas[next].g_fim
+                if next not in self.cost_so_far or new_cost < ucs_w:
+                    priority = new_cost + current.arestas[next].custoH
+                    self.resultado.append((current, filho))
+                    frontier.put((priority, filho))
