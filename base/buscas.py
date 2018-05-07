@@ -154,13 +154,14 @@ class BuscaCustoUniforme(Buscas):
             self.cor[v] = 'branco'  # branco cinza e preto
 
         if estado_pai.goal:
-            print("Cheguei no final")
+            print("Cheguei no final! ", str(estado_pai))
             return estado_pai
 
         if self.cor[estado_pai] != 'preto':
             for filho in filhos:
                 self.cor[filho] = 'cinza'
                 self.resultado.append(self.search(filho.g_fim))
+                self.cor[filho] = 'preto'
 
 
 class BuscaGreedy(Buscas):
