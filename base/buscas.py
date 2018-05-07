@@ -46,13 +46,14 @@ class BuscaLargura(Buscas):
         self.name = "Busca Largura"
 
     def search(self, data, estado_pai):
-        # 
         for v in fn.list_state(estado_pai, []):             
             self.d[v] = np.inf
             self.cor[v] = 'branco'  # branco cinza e preto
+            # Marca os estados como none, para saber quais os estados que se deve passar novamente
             self.pred[v] = None
             self.drawPoint(data, v, self.cor[v])
 
+        # Marca o estado pai como cinza
         self.cor[estado_pai] = 'cinza'
         self.d[estado_pai] = 0
         self.drawPoint(data, estado_pai, self.cor[estado_pai])
@@ -73,19 +74,16 @@ class BuscaLargura(Buscas):
                 # se sua cor for branca, eu troco ela pra cinza
                 if self.cor[v] == 'branco':
                     self.cor[v] = 'cinza'
-                    # Adiciono o meu filho atual a lista d[v .................................................................. arrumar isso]
                     self.d[v] = self.d[u] + 1
                     self.pred[v] = u
                     self.drawPoint(data, v, self.cor[v])
 
-                    # A minha lista de estados visitados recebe como seu parametro as listas U e V ..................................................
                     self.visitado.append((u, v))
 
                     Q.put(v)
             self.cor[u] = 'preto'
             self.drawPoint(data, u, self.cor[u])
 
-        # O resultado é
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
 
         # Salva uma imagem com os dados coletados nos passos anteriores e com os estados visitados pintados
@@ -116,9 +114,8 @@ class BuscaProfundidade(Buscas):
         for v in fn.list_state(estado_pai, []):
             # para cada filho na lista, verifica-se se ele é branco
             if self.cor[v] == 'branco':
-                # se sim  ..................................
                 tempo = self.visit(estado_pai, v, tempo)
-        # 
+
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
 
 
@@ -190,12 +187,9 @@ class BuscaCustoUniforme(Buscas):
 
             # para cada estado filho
             for node in current_node.children:
-                # O custo dele é calculado com uma heuristica
                 custo = current_node.arestas[node].custoH
-                # ..............................................
                 filho = current_node.arestas[node].g_fim
 
-                # 
                 if not filho in self.visitado:
                     self.resultado.append((current_node, filho))
                     frontier.put(
@@ -234,7 +228,6 @@ class BuscaGreedy(Buscas):
 
     def search(self, data, estado_pai):
         frontier = PriorityQueue()
-        #Adiciona dados a minha lista de estados pai
         frontier.put((0, estado_pai))
 
         # Se a minha lista de estados pai não estiver vazia, entra no while
@@ -252,11 +245,7 @@ class BuscaGreedy(Buscas):
             for node in current_node.children:
                 # Adiciona seu custo com uma busca heuristica
                 custo = current_node.arestas[node].custoH
-
-                # 
                 filho = current_node.arestas[node].g_fim
-
-                #
                 if not filho in self.visitado:
                     self.resultado.append((current_node, filho))
                     frontier.put(
@@ -296,7 +285,6 @@ class BuscaAEstrela(Buscas):
                 # Ele recebera um novo custo sendo este custo a soma da distancia ja andada para chegar até ele, 
                 # Mais a heuristica dele mesmo até o final
                 new_cost = ucs_w + current.arestas[next].custo
-                #
                 filho = current.arestas[next].g_fim
                 
                 # se o custo do proximo filho a ser comparado não for maior que o do filho analizado anteriormente, 
