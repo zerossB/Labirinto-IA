@@ -42,6 +42,11 @@ class Graph_state:
     def __str__(self):
         repre = "(%d,%d)" % (self.column, self.line)
         return repre
+    
+    def __lt__(self, other):
+        return ((self.line, self.column) <
+                (other.line, other.column))
+
 
 # Cria uma classe aresta e define um objeto nos parametros para utilizar
 class Aresta(object):
@@ -55,7 +60,7 @@ class Aresta(object):
     def get_custo(self):
         return self.custo
     
-    def get_heusistica(self):
+    def get_heuristica(self):
         return self.custoH
 
     # Faço o custo da minha Aresta/Vertice

@@ -8,7 +8,7 @@ from base.grafo import Aresta
 #'De Pillow importar Image, ImageDraw'
 from PIL import Image, ImageDraw
 #'De queue=fila importar Queue, LifoQueue'
-from queue import Queue, LifoQueue
+from queue import Queue, LifoQueue, PriorityQueue
 #'De base.funcoes importar addQueue'
 from base.funcoes import addQueue
 
@@ -144,26 +144,28 @@ class BuscaCustoUniforme(Buscas):
         super().__init__()
         self.cor = {}
 
+    def geraResultado(self):
+        self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
+
     def search(self, data, estado_pai):
-        filhos = estado_pai.arestas
-        filhos = [filhos[x] for x in filhos]
-        filhos = sorted(filhos, key=Aresta.get_heusistica)
+        frontier = PriorityQueue()
+        frontier.put((0, estado_pai))
 
-        self.cor[estado_pai] = 'branco'
-        for v in fn.list_state(estado_pai, []):
-            self.cor[v] = 'branco'  # branco cinza e preto
+        while not frontier.empty():
+            ucs_w, current_node = frontier.get()
+            self.visitado.append(current_node)
 
-        if estado_pai.goal:
-            print("Cheguei no final! ", str(estado_pai))
-            return estado_pai
+            if current_node.goal:
+                print("Cheguei no final! ", current_node)
 
-        if self.cor[estado_pai] != 'preto':
-            for filho in filhos:
-                self.cor[filho] = 'cinza'
-                self.visitado.append((estado_pai, filho.g_fim))
-                self.resultado.append(self.search(data, filho.g_fim))
-                self.cor[filho] = 'preto'
-                self.drawPoint(data, filho.g_fim, self.cor[filho])
+            for node in current_node.children:
+                custo = current_node.arestas[node].custoH
+                filho = current_node.arestas[node].g_fim
+                if not filho in self.visitado:
+                    self.marcado.append((current_node, filho))
+                    frontier.put(
+                        (custo, filho)
+                    )
 
 
 class BuscaGreedy(Buscas):
@@ -215,6 +217,3 @@ class BuscaGreedy(Buscas):
                 self.resultado.append(self.search(data, filho.g_fim))
                 self.cor[filho] = 'preto'
                 self.drawPoint(data, filho.g_fim, self.cor[filho])
-
-    def calcCustoH(self, estado_pai):
-        pass
