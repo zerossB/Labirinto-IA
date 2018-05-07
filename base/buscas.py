@@ -108,9 +108,8 @@ class BuscaProfundidade(Buscas):
         for v in G.children:
             if self.cor[v] == 'branco':
                 self.pred[v] = s
-                tempo = self.visit(G, v, tempo)
-
                 self.visitado.append((s, v))
+                tempo = self.visit(G, v, tempo)
 
         self.cor[s] = 'preto'
         self.tempo = tempo + 1
