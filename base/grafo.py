@@ -64,7 +64,7 @@ class Aresta(object):
         self.custo = self.custo + 2
 
     def __str__(self):
-        return str(self.g_ini, self.g_fim, self.custo)
+        return str(self.g_ini) + str(self.g_fim) + str(self.custo)
 
 
 # def busca_largura(data, estado_pai):

@@ -146,23 +146,21 @@ class BuscaCustoUniforme(Buscas):
         filhos = [filhos[x] for x in filhos]
         filhos = sorted(filhos, key=Aresta.get_custo)
 
-        for v in fn.list_state(estado_pai, []):
+        for v in filhos:
             # cores possíveis: branco, cinza e preto
             self.cor[v] = 'branco'
+        
+        if not filhos:
+            print("Lista Vazia")
 
         filho = filhos[-1]
-        self.cor[filho] = 'cinza'
-
-        if not filhos:
-            return
+        print(filho)
 
         if filho.g_ini.goal:
-            self.cor[filho] = 'preto'
-            self.resultado.append(filho)
-        elif self.cor[filho] == 'cinza':
-            filhos.remove(filho)
-            self.cor[filho] = 'preto'
-            self.search(filho.g_ini)
+            print("Objetivo chego")
+            return
+        else:
+            self.search(filho.g_fim)
 
 
 class BuscaGreedy(Buscas):
