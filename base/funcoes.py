@@ -11,13 +11,15 @@ def addQueue(path, pixel):
     novo_path.append(pixel)
     return novo_path
 
-#Função para gerar uma solução 
+# Função para gerar uma solução
+
+
 def geraResolucao(path, name, full_path=[], show=False):
     """
         Pego a minha solução e coloco a linha vermelha
             no caminho correto
     """
-    #Carrega meu labirinto e atribui o valor dele em "data"
+    # Carrega meu labirinto e atribui o valor dele em "data"
     data = load_image("labirintos/labirinto.png")
 
     #
@@ -57,24 +59,22 @@ def load_image(infilename):
     return data
 
 
-def drawLines(data, lines):
+def drawLines(data, visitados, filename):
     img = Image.fromarray(np.asarray(
         np.clip(data, 0, 255), dtype="uint8"), "RGBA")
     draw = ImageDraw.Draw(img)
-
-    lines = [x for x in lines]
-    # lines = sorted(lines, key=lambda x: x.line)
-    for key in range(1, len(lines)):
+    
+    for g_ini, g_fim in visitados:
         draw.line(
-            (lines[key-1].line, lines[key-1].column,
-                lines[key].line, lines[key].column),
+            (g_ini.column, g_ini.line,
+                g_fim.column, g_fim.line),
             fill=(255, 0, 0), width=2
         )
 
     # draw.line(lines, fill=255, width=2)
     # draw.line((0, img.size[1], img.size[0], 0), fill=128, width=2)
 
-    name_file = "Resolucao.png"
+    name_file = "Resolucao-Lines-"+filename+".png"
     img.save("resolv/"+name_file)
 
 
@@ -88,7 +88,9 @@ def save_image(npdata, outfilename):
         np.clip(npdata, 0, 255), dtype="uint8"), "RGBA")
     img.save("resolv/" + outfilename)
 
-#Cria função para entrada do labirinto
+# Cria função para entrada do labirinto
+
+
 def find_entry(data):
     """
         Procuro o inicio do meu labirinto
@@ -97,14 +99,16 @@ def find_entry(data):
     # print data[0].shape
     #
     for index, x in enumerate(data[0]):
-        #Se o array de X que é 0 for igual a
+        # Se o array de X que é 0 for igual a
         if x[0] == 0:
             # print(index)
             # print(data[2][index][0])
-            #Retornar meu ..... e meu index.
+            # Retornar meu ..... e meu index.
             return 0, index
 
-#Cria uma função de saída 
+# Cria uma função de saída
+
+
 def find_exit(data):
     """
         Procuro a saida do meu labirinto
@@ -216,7 +220,7 @@ def find_next_intersection(data, act_state, vector, objective):
         # go right
         for x in range(act_state.column+vector[0], wd, vector[0]):
             right, down, left, top = find_dir(data, act_state.line, x)
-            
+
             if right == 0:  # found an edge
                 new_state = Graph_state(act_state.line, x)
                 new_state.isgoal(objective)

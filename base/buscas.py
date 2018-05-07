@@ -68,6 +68,8 @@ class BuscaLargura(Buscas):
                     self.pred[v] = u
                     self.drawPoint(data, v, self.cor[v])
 
+                    self.visitado.append((u, v))
+
                     Q.put(v)
             self.cor[u] = 'preto'
             self.drawPoint(data, u, self.cor[u])
@@ -141,13 +143,10 @@ class BuscaCustoUniforme(Buscas):
         super().__init__()
         self.cor = {}
 
-    def search(self, estado_pai):
+    def search(self, data, estado_pai):
         filhos = estado_pai.arestas
         filhos = [filhos[x] for x in filhos]
         filhos = sorted(filhos, key=Aresta.get_custo)
-        filhos = list(reversed(filhos))
-
-        # print(filhos)
 
         self.cor[estado_pai] = 'branco'
         for v in fn.list_state(estado_pai, []):
@@ -160,30 +159,59 @@ class BuscaCustoUniforme(Buscas):
         if self.cor[estado_pai] != 'preto':
             for filho in filhos:
                 self.cor[filho] = 'cinza'
-                self.resultado.append(self.search(filho.g_fim))
+                self.resultado.append(self.search(data, filho.g_fim))
                 self.cor[filho] = 'preto'
+                self.drawPoint(data, filho.g_fim, self.cor[filho])
 
 
 class BuscaGreedy(Buscas):
+    """
+    Algoritmo Busca - Uniforme
+    1. Definir um conjunto L de nós iniciais
+
+    2. Ordene L em ordem crescente de custo
+
+    3. Se L é vazio
+        Então Busca não foi bem sucedida
+        Senão seja n o primeiro nó de L;
+
+    4. Se n é um nó objetivo
+        Então
+            Retornar caminho do nó inicial até N;
+            Parar
+        Senão
+            Remover n de L;
+            Adicionar em L todos os nós filhos de n, rotulando cada nó com o seu caminho até o nó inicial;
+            Ordene L em ordem crescente de custo;
+            Volte ao passo 3.
+    """
+
     def __init__(self):
         super().__init__()
+        self.cor = {}
+        self.H = {}
 
-    def search(self, data, objetivo):
-        """
-            Args:
-                s: a list of start times
-                f: a list of finish times
-            Returns:
-                A maximal set of activities that can be scheduled.
-                (We use a list to hold the set.)
-        """
-        assert(len(data) == len(objetivo)
-               )  # each start time must match a finish time
-        n = len(data)  # could be len f as well!
-        a = []
-        k = 0
-        for m in range(1, n):
-            if data[m] >= objetivo[k]:
-                a.append(m)
-                k = m
-        return a
+    def search(self, data, estado_pai):
+        filhos = estado_pai.arestas
+        filhos = [filhos[x] for x in filhos]
+        filhos = sorted(filhos, key=Aresta.get_custo)
+        filhos = list(reversed(filhos))
+
+        self.cor[estado_pai] = 'branco'
+        for v in fn.list_state(estado_pai, []):
+            self.cor[v] = 'branco'  # branco cinza e preto
+            self.drawPoint(data, v, self.cor[v])
+
+        if estado_pai.goal:
+            print("Cheguei no final")
+            return estado_pai
+
+        if self.cor[estado_pai] != 'preto':
+            for filho in filhos:
+                self.cor[filho] = 'cinza'
+                self.resultado.append(self.search(data, filho.g_fim))
+                self.cor[filho] = 'preto'
+                self.drawPoint(data, filho.g_fim, self.cor[filho])
+
+    def calcCustoH(self, estado_pai):
+        pass
