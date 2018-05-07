@@ -5,7 +5,7 @@ from PIL import Image
 
 import base.funcoes as fn
 from base.grafo import Graph_state
-from base.buscas import BuscaLargura, BuscaProfundidade, BuscaCustoUniforme
+from base.buscas import BuscaLargura, BuscaProfundidade, BuscaCustoUniforme, BuscaGreedy
 
 #Cria função main
 def main():
@@ -47,9 +47,13 @@ def main():
     # buscaProfundidade.drawImage(img_data)
     # print(resultado)
 
-    buscaCustoUniforme = BuscaCustoUniforme()
-    buscaCustoUniforme.search(img_data, start_point)
-    fn.save_image(img_data, 'CustoUniforme.png')
+    # buscaCustoUniforme = BuscaCustoUniforme()
+    # buscaCustoUniforme.search(img_data, start_point)
+    # fn.save_image(img_data, 'CustoUniforme.png')
+
+    buscaGreedy = BuscaGreedy()
+    buscaGreedy.search(img_data, start_point)
+    fn.save_image(img_data, 'Greddy.png')
 
 if __name__ == '__main__':
     main()
