@@ -32,10 +32,11 @@ class Graph_state:
         self.children.append(child)
 
     # A partir do Pai, calculo a distancia entre meus filhos
-    def calcArestas(self):
+    def calcArestas(self, objective):
         for filho in self.children:
             aresta = Aresta(self, filho)
             aresta.custoAresta()
+            aresta.custoHeuristica(objective)
             self.arestas[filho] = aresta
 
     def __str__(self):
@@ -45,26 +46,38 @@ class Graph_state:
 # Cria uma classe aresta e define um objeto nos parametros para utilizar
 class Aresta(object):
     # Definindo função de start com várieis criadas nos parâmetros.
-    def __init__(self, g_ini=None, g_fim=None, custo=0):
+    def __init__(self, g_ini=None, g_fim=None, custo=0, custoH=0):
         self.g_ini = g_ini
         self.g_fim = g_fim
         self.custo = custo
-    
+        self.custoH = custoH
+
     def get_custo(self):
         return self.custo
+    
+    def get_heusistica(self):
+        return self.custoH
 
     # Faço o custo da minha Aresta/Vertice
     def custoAresta(self):
-        x = self.g_fim.line - self.g_ini.line
-        y = self.g_fim.column - self.g_ini.column
+        x = self.g_fim.column - self.g_ini.column
+        y = self.g_fim.line - self.g_ini.line
 
         self.custo = x if x != 0 else y
         if self.custo < 0:
             self.custo = self.custo * -1
         self.custo = self.custo + 2
 
+    def custoHeuristica(self, objetivo):
+        oX, oY = objetivo[0], objetivo[1]
+        gX, gY = self.g_ini.column, self.g_ini.line
+
+        self.custoH = (oX - gX) + (oY - gY)
+        if self.custoH < 0:
+            self.custoH = self.custoH * -1
+
     def __str__(self):
-        return str(self.g_ini) + str(self.g_fim) + str(self.custo)
+        return str(self.g_ini) + " " + str(self.g_fim) + " " + str(self.custo) + " " + str(self.custoH)
 
 
 # def busca_largura(data, estado_pai):

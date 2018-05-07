@@ -75,7 +75,7 @@ def drawLines(data, visitados, filename):
     # draw.line((0, img.size[1], img.size[0], 0), fill=128, width=2)
 
     name_file = "Resolucao-Lines-"+filename+".png"
-    img.save("resolv/"+name_file)
+    img.save("resolv/lines/"+name_file)
 
 
 def save_image(npdata, outfilename):
@@ -126,10 +126,10 @@ def count_state(root_state, count):
     return count
 
 
-def count_custo(root_state):
-    root_state.calcArestas()
+def count_custo(root_state, objetivo):
+    root_state.calcArestas(objetivo)
     for filho in root_state.children:
-        count_custo(filho)
+        count_custo(filho, objetivo)
 
 
 def list_state(root_state, lista):

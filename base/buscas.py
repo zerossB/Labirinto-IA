@@ -147,7 +147,7 @@ class BuscaCustoUniforme(Buscas):
     def search(self, data, estado_pai):
         filhos = estado_pai.arestas
         filhos = [filhos[x] for x in filhos]
-        filhos = sorted(filhos, key=Aresta.get_custo)
+        filhos = sorted(filhos, key=Aresta.get_heusistica)
 
         self.cor[estado_pai] = 'branco'
         for v in fn.list_state(estado_pai, []):
@@ -160,6 +160,7 @@ class BuscaCustoUniforme(Buscas):
         if self.cor[estado_pai] != 'preto':
             for filho in filhos:
                 self.cor[filho] = 'cinza'
+                self.visitado.append((estado_pai, filho.g_fim))
                 self.resultado.append(self.search(data, filho.g_fim))
                 self.cor[filho] = 'preto'
                 self.drawPoint(data, filho.g_fim, self.cor[filho])
@@ -196,7 +197,7 @@ class BuscaGreedy(Buscas):
         filhos = estado_pai.arestas
         filhos = [filhos[x] for x in filhos]
         filhos = sorted(filhos, key=Aresta.get_custo)
-        filhos = list(reversed(filhos))
+        filhos.reverse()
 
         self.cor[estado_pai] = 'branco'
         for v in fn.list_state(estado_pai, []):
@@ -210,6 +211,7 @@ class BuscaGreedy(Buscas):
         if self.cor[estado_pai] != 'preto':
             for filho in filhos:
                 self.cor[filho] = 'cinza'
+                self.visitado.append((estado_pai, filho.g_fim))
                 self.resultado.append(self.search(data, filho.g_fim))
                 self.cor[filho] = 'preto'
                 self.drawPoint(data, filho.g_fim, self.cor[filho])

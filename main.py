@@ -36,25 +36,25 @@ def main():
     fn.find_next_intersection(img_data, start_point, fn.find_dir(
         img_data, l_entrada, c_entrada), objective)
 
-    fn.count_custo(start_point)
+    fn.count_custo(start_point, objective)
 
-    buscaLargura = BuscaLargura()
-    buscaLargura.search(img_data, start_point)
-    fn.drawLines(img_data, buscaLargura.visitado, "Largura")
-    print(buscaLargura.resultado,'\n\n')
+    # buscaLargura = BuscaLargura()
+    # buscaLargura.search(img_data, start_point)
+    # fn.drawLines(img_data, buscaLargura.visitado, "Largura")
+    # print(buscaLargura.resultado,'\n\n')
 
-    buscaProfundidade = BuscaProfundidade()
-    buscaProfundidade.search(img_data, start_point)
-    fn.drawLines(img_data, buscaLargura.visitado, "Profundidade")
-    print(buscaLargura.resultado,'\n\n')
+    # buscaProfundidade = BuscaProfundidade()
+    # buscaProfundidade.search(img_data, start_point)
+    # fn.drawLines(img_data, buscaLargura.visitado, "Profundidade")
+    # print(buscaLargura.resultado,'\n\n')
 
-    # buscaCustoUniforme = BuscaCustoUniforme()
-    # buscaCustoUniforme.search(img_data, start_point)
-    # fn.save_image(img_data, 'CustoUniforme.png')
+    buscaCustoUniforme = BuscaCustoUniforme()
+    buscaCustoUniforme.search(img_data, start_point)
+    fn.drawLines(img_data, buscaCustoUniforme.visitado, "Uniforme")
 
     # buscaGreedy = BuscaGreedy()
     # buscaGreedy.search(img_data, start_point)
-    # fn.save_image(img_data, 'Greddy.png')
+    # fn.drawLines(img_data, buscaGreedy.visitado, "Greedy")
 
 if __name__ == '__main__':
     main()
