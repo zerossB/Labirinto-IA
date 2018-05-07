@@ -9,6 +9,7 @@ from base.grafo import Aresta
 from PIL import Image, ImageDraw
 #'De queue=fila importar Queue, LifoQueue'
 from queue import Queue, LifoQueue, PriorityQueue
+from base.queues import ReversePriorityQueue
 #'De base.funcoes importar addQueue'
 from base.funcoes import addQueue
 
@@ -40,6 +41,7 @@ class BuscaLargura(Buscas):
         self.cor = {}
         self.pred = {}
         self.d = {}
+        self.name = "Busca Largura"
 
     def search(self, data, estado_pai):
         for v in fn.list_state(estado_pai, []):
@@ -85,6 +87,7 @@ class BuscaProfundidade(Buscas):
         self.pred = {}
         self.d = {}
         self.f = {}
+        self.name = "Busca Profundidade"
 
     def search(self, data, estado_pai):
         tempo = 0
@@ -143,6 +146,7 @@ class BuscaCustoUniforme(Buscas):
     def __init__(self):
         super().__init__()
         self.cor = {}
+        self.name = "Busca Custo Uniforme"
 
     def geraResultado(self):
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
@@ -156,13 +160,14 @@ class BuscaCustoUniforme(Buscas):
             self.visitado.append(current_node)
 
             if current_node.goal:
-                print("Cheguei no final! ", current_node)
+                # print("Cheguei no final! ", current_node)
+                return
 
             for node in current_node.children:
                 custo = current_node.arestas[node].custoH
                 filho = current_node.arestas[node].g_fim
                 if not filho in self.visitado:
-                    self.marcado.append((current_node, filho))
+                    self.resultado.append((current_node, filho))
                     frontier.put(
                         (custo, filho)
                     )
@@ -194,9 +199,10 @@ class BuscaGreedy(Buscas):
         super().__init__()
         self.cor = {}
         self.H = {}
+        self.name = "Busca Greedy (Gulosa)"
 
     def search(self, data, estado_pai):
-        frontier = PriorityQueue()
+        frontier = ReversePriorityQueue()
         frontier.put((0, estado_pai))
 
         while not frontier.empty():
@@ -204,13 +210,14 @@ class BuscaGreedy(Buscas):
             self.visitado.append(current_node)
 
             if current_node.goal:
-                print("Cheguei no final! ", current_node)
+                # print("Cheguei no final! ", current_node)
+                return
 
             for node in current_node.children:
                 custo = current_node.arestas[node].custoH
                 filho = current_node.arestas[node].g_fim
                 if not filho in self.visitado:
-                    self.marcado.append((current_node, filho))
+                    self.resultado.append((current_node, filho))
                     frontier.put(
-                        (custo * -1, filho)
+                        (custo, filho)
                     )

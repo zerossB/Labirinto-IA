@@ -33,16 +33,16 @@ def geraResolucao(path, name, full_path=[], show=False):
     save_image(data, "resolv/"+name_file)
 
 
-def printSpecs(t_ini, t_fim, busca, path, count, full_path):
+def printSpecs(t_ini, t_fim, busca):
     """
         Printa informações sobre as funções
     """
     print("\nTempo de Resolução: ", t_fim - t_ini, "ms")
-    print("Metodo de Busca: ", busca)
-    print("Número de estados Analisados ", count)
-    print("Número de estados p/ Solução: ", len(path))
-    print("Memória Alocada: ", sys.getsizeof(path), "KBytes")
-    print("Memória Total Alocada: ", sys.getsizeof(full_path), "KBytes")
+    print("Metodo de Busca: ", busca.name)
+    print("Número de estados Analisados ", len(busca.visitado))
+    print("Número de estados p/ Solução: ", len(busca.resultado))
+    print("Memória Alocada: ", sys.getsizeof(busca.visitado), "KBytes")
+    print("Memória Total Alocada: ", sys.getsizeof(busca.resultado), "KBytes")
 
 
 def load_image(infilename):
@@ -60,10 +60,11 @@ def load_image(infilename):
 
 
 def drawLines(data, visitados, filename):
+    print("Imprimindo "+filename)
     img = Image.fromarray(np.asarray(
         np.clip(data, 0, 255), dtype="uint8"), "RGBA")
     draw = ImageDraw.Draw(img)
-    
+
     for g_ini, g_fim in visitados:
         draw.line(
             (g_ini.column, g_ini.line,

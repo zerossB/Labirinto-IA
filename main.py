@@ -7,27 +7,29 @@ import base.funcoes as fn
 from base.grafo import Graph_state
 from base.buscas import BuscaLargura, BuscaProfundidade, BuscaCustoUniforme, BuscaGreedy
 
-#Cria função main
+# Cria função main
+
+
 def main():
-    #Cria funçao de manipulação do tempo, desde o start da aplicação até o fim dela.
+    # Cria funçao de manipulação do tempo, desde o start da aplicação até o fim dela.
     t0 = time.time()
 
     #img_data = load_image('4 by 4 orthogonal maze.png')
-    #Carrega a imagem passada na pasta do labirinto, com o nome da imagem "labirinto.png"
+    # Carrega a imagem passada na pasta do labirinto, com o nome da imagem "labirinto.png"
     img_data = fn.load_image('labirintos/labirinto.png')
     #img_data = load_image('100 by 100 orthogonal maze.png')
 
-    #Armazena os valores do meu labirinto=img_data. Armazena em l_entrada o inicio do meu
-    #labirinto em X=linha, armazena em c_entrada o inicio do meu labirinto em Y=coluna.
+    # Armazena os valores do meu labirinto=img_data. Armazena em l_entrada o inicio do meu
+    # labirinto em X=linha, armazena em c_entrada o inicio do meu labirinto em Y=coluna.
     l_entrada, c_entrada = fn.find_entry(img_data)
-    #Armazena os valores de saída do meu labirinto=img_data. Armazena em lex o fim do meu 
-    #labirinto na linha em X=linha, armazena em cex o fim do meu labirinto em Y=coluna.
+    # Armazena os valores de saída do meu labirinto=img_data. Armazena em lex o fim do meu
+    # labirinto na linha em X=linha, armazena em cex o fim do meu labirinto em Y=coluna.
     lex, cex = fn.find_exit(img_data)
-    #Aqui está passando os valores da minha saída e definindo no meu objetivo.
+    # Aqui está passando os valores da minha saída e definindo no meu objetivo.
     objective = (lex, cex)
-    #Imprime na tela minha entrada.
+    # Imprime na tela minha entrada.
     print("entrada: ", l_entrada, c_entrada)
-    #Imprime na tela meu objetivo=saída.
+    # Imprime na tela meu objetivo=saída.
     print("saida: ", objective, "\n")
 
     start_point = Graph_state(l_entrada, c_entrada, True)
@@ -38,23 +40,34 @@ def main():
 
     fn.count_custo(start_point, objective)
 
-    # buscaLargura = BuscaLargura()
-    # buscaLargura.search(img_data, start_point)
-    # fn.drawLines(img_data, buscaLargura.visitado, "Largura")
-    # print(buscaLargura.resultado,'\n\n')
+    buscaLargura = BuscaLargura()
+    t_ini = time.time()
+    buscaLargura.search(img_data, start_point)
+    t_fim = time.time()
+    fn.printSpecs(t_ini, t_fim, buscaLargura)
+    fn.drawLines(img_data, buscaLargura.visitado, "Largura")
 
-    # buscaProfundidade = BuscaProfundidade()
-    # buscaProfundidade.search(img_data, start_point)
-    # fn.drawLines(img_data, buscaLargura.visitado, "Profundidade")
-    # print(buscaLargura.resultado,'\n\n')
+    buscaProfundidade = BuscaProfundidade()
+    t_ini = time.time()
+    buscaProfundidade.search(img_data, start_point)
+    t_fim = time.time()
+    fn.printSpecs(t_ini, t_fim, buscaProfundidade)
+    fn.drawLines(img_data, buscaLargura.visitado, "Profundidade")
 
     buscaCustoUniforme = BuscaCustoUniforme()
+    t_ini = time.time()
     buscaCustoUniforme.search(img_data, start_point)
+    t_fim = time.time()
+    fn.printSpecs(t_ini, t_fim, buscaCustoUniforme)
     fn.drawLines(img_data, buscaCustoUniforme.marcado, "Uniforme")
 
     buscaGreedy = BuscaGreedy()
+    t_ini = time.time()
     buscaGreedy.search(img_data, start_point)
+    t_fim = time.time()
+    fn.printSpecs(t_ini, t_fim, buscaGreedy)
     fn.drawLines(img_data, buscaGreedy.marcado, "Greedy")
+
 
 if __name__ == '__main__':
     main()
