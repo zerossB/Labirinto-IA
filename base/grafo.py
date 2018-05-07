@@ -39,7 +39,7 @@ class Graph_state:
             self.arestas[filho] = aresta
 
     def __str__(self):
-        repre = "(%d,%d)" % (self.line, self.column)
+        repre = "(%d,%d)" % (self.column, self.line)
         return repre
 
 # Cria uma classe aresta e define um objeto nos parametros para utilizar
