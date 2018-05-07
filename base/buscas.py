@@ -63,7 +63,7 @@ class BuscaLargura(Buscas):
 
         # Verifica se tem algum estado pai na minha lista, caso tenha ele entra no while
         while not Q.empty():
-            u = Q.get()
+            u = Q.get_nowait()
 
         # Caso o atual "u" que é minha lista de estados pai, contenha o estado pai objetivo, então sai do while
             if u.goal:
@@ -97,45 +97,100 @@ class BuscaProfundidade(Buscas):
         self.cor = {}
         self.pred = {}
         self.d = {}
-        self.f = {}
         # Nome da busca
-        self.name = "Busca Profundidade"
+        self.name = "Busca Largura"
 
     def search(self, data, estado_pai):
-        # tempo inicial
-        tempo = 0
-
-        # Para cada estado possivel a partir do estado pai, ele armazena estes estados em uma lista e os coloca todos como cor branca
-        for v in fn.list_state(estado_pai, []):
-            # cores possíveis: branco, cinza e preto
-            self.cor[v] = 'branco'
+        for v in fn.list_state(estado_pai, []):             
+            self.d[v] = np.inf
+            self.cor[v] = 'branco'  # branco cinza e preto
+            # Marca os estados como none, para saber quais os estados que se deve passar novamente
             self.pred[v] = None
+            self.drawPoint(data, v, self.cor[v])
 
-        for v in fn.list_state(estado_pai, []):
-            # para cada filho na lista, verifica-se se ele é branco
-            if self.cor[v] == 'branco':
-                tempo = self.visit(estado_pai, v, tempo)
+        # Marca o estado pai como cinza
+        self.cor[estado_pai] = 'cinza'
+        self.d[estado_pai] = 0
+        self.drawPoint(data, estado_pai, self.cor[estado_pai])
+
+        Q = LifoQueue()
+        Q.put(estado_pai)
+
+        # Verifica se tem algum estado pai na minha lista, caso tenha ele entra no while
+        while not Q.empty():
+            u = Q.get_nowait()
+
+        # Caso o atual "u" que é minha lista de estados pai, contenha o estado pai objetivo, então sai do while
+            if u.goal:
+                break
+
+        # para cada filho na lista de filhos do pai a ser analisado
+            for v in u.children:
+                # se sua cor for branca, eu troco ela pra cinza
+                if self.cor[v] == 'branco':
+                    self.cor[v] = 'cinza'
+                    self.d[v] = self.d[u] + 1
+                    self.pred[v] = u
+                    self.drawPoint(data, v, self.cor[v])
+
+                    self.visitado.append((u, v))
+
+                    Q.put(v)
+            self.cor[u] = 'preto'
+            self.drawPoint(data, u, self.cor[u])
 
         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
 
+        # Salva uma imagem com os dados coletados nos passos anteriores e com os estados visitados pintados
+        fn.save_image(data, "Resolucao-Largura.png")
+
+# NÃO UTILIZADO.
+# class BuscaProfundidade(Buscas):
+#     # Variaveis que serão utilizadas durante a busca
+#     def __init__(self):
+#         super().__init__()
+#         self.cor = {}
+#         self.pred = {}
+#         self.d = {}
+#         self.f = {}
+#         # Nome da busca
+#         self.name = "Busca Profundidade"
+
+#     def search(self, data, estado_pai):
+#         # tempo inicial
+#         tempo = 0
+
+#         # Para cada estado possivel a partir do estado pai, ele armazena estes estados em uma lista e os coloca todos como cor branca
+#         for v in fn.list_state(estado_pai, []):
+#             # cores possíveis: branco, cinza e preto
+#             self.cor[v] = 'branco'
+#             self.pred[v] = None
+
+#         for v in fn.list_state(estado_pai, []):
+#             # para cada filho na lista, verifica-se se ele é branco
+#             if self.cor[v] == 'branco':
+#                 tempo = self.visit(estado_pai, v, tempo)
+
+#         self.resultado = [key for key in self.cor if self.cor[key] == 'preto']
 
 
-    def visit(self, G, s, tempo):
-        tempo = tempo + 1
-        self.d[s] = tempo
-        self.cor[s] = 'cinza'
 
-        for v in G.children:
-            if self.cor[v] == 'branco':
-                self.pred[v] = s
-                self.visitado.append((s, v))
-                tempo = self.visit(G, v, tempo)
+#     def visit(self, G, s, tempo):
+#         tempo = tempo + 1
+#         self.d[s] = tempo
+#         self.cor[s] = 'cinza'
 
-        self.cor[s] = 'preto'
-        self.tempo = tempo + 1
-        self.f[s] = tempo
+#         for v in G.children:
+#             if self.cor[v] == 'branco':
+#                 self.pred[v] = s
+#                 self.visitado.append((s, v))
+#                 tempo = self.visit(G, v, tempo)
 
-        return tempo
+#         self.cor[s] = 'preto'
+#         self.tempo = tempo + 1
+#         self.f[s] = tempo
+
+#         return tempo
 
 
 class BuscaCustoUniforme(Buscas):
@@ -187,7 +242,7 @@ class BuscaCustoUniforme(Buscas):
 
             # para cada estado filho
             for node in current_node.children:
-                custo = current_node.arestas[node].custoH
+                custo = current_node.arestas[node].custo
                 filho = current_node.arestas[node].g_fim
 
                 if not filho in self.visitado:

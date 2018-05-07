@@ -69,7 +69,7 @@ def drawLines(data, visitados, filename):
         draw.line(
             (g_ini.column, g_ini.line,
                 g_fim.column, g_fim.line),
-            fill=(0, 0, 255), width=2
+            fill=(0, 255, 255), width=2
         )
 
     # draw.line(lines, fill=255, width=2)
