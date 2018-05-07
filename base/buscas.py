@@ -196,24 +196,21 @@ class BuscaGreedy(Buscas):
         self.H = {}
 
     def search(self, data, estado_pai):
-        filhos = estado_pai.arestas
-        filhos = [filhos[x] for x in filhos]
-        filhos = sorted(filhos, key=Aresta.get_custo)
-        filhos.reverse()
+        frontier = PriorityQueue()
+        frontier.put((0, estado_pai))
 
-        self.cor[estado_pai] = 'branco'
-        for v in fn.list_state(estado_pai, []):
-            self.cor[v] = 'branco'  # branco cinza e preto
-            self.drawPoint(data, v, self.cor[v])
+        while not frontier.empty():
+            ucs_w, current_node = frontier.get()
+            self.visitado.append(current_node)
 
-        if estado_pai.goal:
-            print("Cheguei no final")
-            return estado_pai
+            if current_node.goal:
+                print("Cheguei no final! ", current_node)
 
-        if self.cor[estado_pai] != 'preto':
-            for filho in filhos:
-                self.cor[filho] = 'cinza'
-                self.visitado.append((estado_pai, filho.g_fim))
-                self.resultado.append(self.search(data, filho.g_fim))
-                self.cor[filho] = 'preto'
-                self.drawPoint(data, filho.g_fim, self.cor[filho])
+            for node in current_node.children:
+                custo = current_node.arestas[node].custoH
+                filho = current_node.arestas[node].g_fim
+                if not filho in self.visitado:
+                    self.marcado.append((current_node, filho))
+                    frontier.put(
+                        (custo * -1, filho)
+                    )

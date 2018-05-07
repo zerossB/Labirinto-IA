@@ -50,12 +50,11 @@ def main():
 
     buscaCustoUniforme = BuscaCustoUniforme()
     buscaCustoUniforme.search(img_data, start_point)
-    # buscaCustoUniforme.geraResultado()
     fn.drawLines(img_data, buscaCustoUniforme.marcado, "Uniforme")
 
-    # buscaGreedy = BuscaGreedy()
-    # buscaGreedy.search(img_data, start_point)
-    # fn.drawLines(img_data, buscaGreedy.visitado, "Greedy")
+    buscaGreedy = BuscaGreedy()
+    buscaGreedy.search(img_data, start_point)
+    fn.drawLines(img_data, buscaGreedy.marcado, "Greedy")
 
 if __name__ == '__main__':
     main()
