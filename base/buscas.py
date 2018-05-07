@@ -98,7 +98,7 @@ class BuscaProfundidade(Buscas):
         self.pred = {}
         self.d = {}
         # Nome da busca
-        self.name = "Busca Largura"
+        self.name = "Busca Profundidade"
 
     def search(self, data, estado_pai):
         for v in fn.list_state(estado_pai, []):             
