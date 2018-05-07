@@ -13,6 +13,8 @@ from queue import Queue, LifoQueue
 from base.funcoes import addQueue
 
 #'Criando classe chamada Buscas(parâmetro{object}):'
+
+
 class Buscas(object):
     #'Definindo função de inicialização para a classe buscas=self'
     def __init__(self):
@@ -112,72 +114,61 @@ class BuscaProfundidade(Buscas):
 
         return tempo
 
-""" 
-def busca_custo_uniforme(data, estado_pai, caminho_percorrido):
-    global lista_peso
-    global num_estado_visitado
-
-    num_estado_visitado += 1
-
-    if estado_pai.goal:
-        data[estado_pai.line][estado_pai.column] = [255, 0, 0, 255]
-        resultado.append(estado_pai)
-    else:
-        lista_caminho = []
-        for peso_caminho in estado_pai.peso_aresta:
-            del lista_caminho[:]
-            if caminho_percorrido != None:
-                lista_caminho.append(caminho_percorrido)
-            lista_caminho.append(peso_caminho)
-            lista_peso.append(list(lista_caminho))
-        
-        soma_peso_anterior = 0
-        prox_estado = None
-        melhor_caminho = None
-        item_lista_peso_remove = None
-        for item_lista_peso in lista_peso:
-            soma_peso_atual = 0
-            for item_lista_caminho in item_lista_peso:
-                soma_peso_atual += item_lista_caminho.peso
-                prox_estado_aux = item_lista_caminho.estado_destino
-                melhor_caminho_aux = item_lista_caminho
-                
-            if soma_peso_atual < soma_peso_anterior or soma_peso_anterior == 0:
-                soma_peso_anterior = soma_peso_atual
-                prox_estado = prox_estado_aux
-                melhor_caminho = melhor_caminho_aux
-                item_lista_peso_remove = item_lista_peso
-
-        lista_peso.remove(item_lista_peso_remove)
-
-        busca_custo_uniforme(data, prox_estado, melhor_caminho)
-
-        for estado_filho in estado_pai.children:
-            if estado_filho in resultado:
-                resultado.append(estado_pai)
-"""
-
 
 class BuscaCustoUniforme(Buscas):
+    """
+    Algoritmo Busca - Uniforme
+    1. Definir um conjunto L de nós iniciais
+
+    2. Ordene L em ordem crescente de custo
+
+    3. Se L é vazio
+        Então Busca não foi bem sucedida
+        Senão seja n o primeiro nó de L;
+
+    4. Se n é um nó objetivo
+        Então
+            Retornar caminho do nó inicial até N;
+            Parar
+        Senão
+            Remover n de L;
+            Adicionar em L todos os nós filhos de n, rotulando cada nó com o seu caminho até o nó inicial;
+            Ordene L em ordem crescente de custo;
+            Volte ao passo 3.
+    """
+
     def __init__(self):
         super().__init__()
         self.cor = {}
-    
+
     def search(self, estado_pai):
         filhos = estado_pai.arestas
         filhos = [filhos[x] for x in filhos]
         filhos = sorted(filhos, key=Aresta.get_custo)
-        
-        if not filhos:
-            print("Não consegui encontrar o final :/")
-        
 
+        for v in fn.list_state(estado_pai, []):
+            # cores possíveis: branco, cinza e preto
+            self.cor[v] = 'branco'
+
+        filho = filhos[-1]
+        self.cor[filho] = 'cinza'
+
+        if not filhos:
+            return
+
+        if filho.g_ini.goal:
+            self.cor[filho] = 'preto'
+            self.resultado.append(filho)
+        elif self.cor[filho] == 'cinza':
+            filhos.remove(filho)
+            self.cor[filho] = 'preto'
+            self.search(filho.g_ini)
 
 
 class BuscaGreedy(Buscas):
     def __init__(self):
         super().__init__()
-    
+
     def search(self, data, objetivo):
         """
             Args:
@@ -187,7 +178,8 @@ class BuscaGreedy(Buscas):
                 A maximal set of activities that can be scheduled.
                 (We use a list to hold the set.)
         """
-        assert(len(data) == len(objetivo))  # each start time must match a finish time
+        assert(len(data) == len(objetivo)
+               )  # each start time must match a finish time
         n = len(data)  # could be len f as well!
         a = []
         k = 0
