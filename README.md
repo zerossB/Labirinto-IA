@@ -1,6 +1,7 @@
 # Labirinto
 
-Geração de solução dado um labirinto, utilizando métodos de buscas.
+Dado um labirinto de Linhas, aplicamos metodos de buscas e geração de logs para poder analisar
+    o poder computacional de cada busca.
 
 ## Metodos de Buscas
 
@@ -17,20 +18,20 @@ Utilizamos os seguintes metodos de buscas:
 Temos uma pequena estrutura básica de arquivos.
 
 - base
-    - bases.py (Guarda todos os metodos que serão utilizados em toda a aplicação, como por exemplo, caregar a imagem)
-    - functions.py (Guarda todos os metodos de busca e suas implementações com o gerenciador de tempo de execução)
+    - buscas.py (Contem todas as buscas)
+    - funcoes.py (Funções em geral)
+    - grafo.py (Contem a Classe de Grafo e a Classe Aresta)
 - labirintos
     - Todas as imagens de teste do nosso labirinto
 - resolv
-    - Contem as Imagens com a resposta, separadas pelo metodo de busca
+    - Resolv
+        - Contem as imagens mostrando onde cada busca passou
+    - Contem as Imagens com a resposta, separadas pelo metodo de busca (#TODO)
 
-
-## TODO
-- [x] Implementar Leitura de Imagem e Arrays
-- [ ] Documentar
-- [x] Refatorar Código p/ Melhor desempenho
-- [x] Busca em Largura
-- [x] Busca em Profundidade
-- [ ] Custo Uniforme
-- [ ] Gulosa (Greedy)
-- [ ] A*
+## AUTHORS
+[@]()
+[@DouglasCalora](https://github.com/DouglasCalora)
+[@eliasassuncao](https://github.com/eliasassuncao)
+[@zerossb](https://github.com/leonfpontes)
+[@leonfpontes](https://github.com/leonfpontes)
+[@]()
