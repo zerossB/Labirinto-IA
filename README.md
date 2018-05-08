@@ -24,8 +24,7 @@ Temos uma pequena estrutura básica de arquivos.
 - labirintos
     - Todas as imagens de teste do nosso labirinto
 - resolv
-<<<<<<< HEAD
-    - Resolv
+    - Lines
         - Contem as imagens mostrando onde cada busca passou
     - Contem as Imagens com a resposta, separadas pelo metodo de busca (#TODO)
 
@@ -41,3 +40,15 @@ Temos uma pequena estrutura básica de arquivos.
 [@leonfpontes](https://github.com/leonfpontes)
 
 [@Sam753](https://github.com/Sam753)
+
+
+## TODO
+- [x] Implementar Leitura de Imagem e Arrays
+- [x] Documentar
+- [x] Refatorar CÃ³digo p/ Melhor desempenho
+- [x] Busca em Largura
+- [x] Busca em Profundidade
+- [x] Custo Uniforme
+- [x] Gulosa (Greedy)
+- [x] A*
+- [ ] Melhorias
