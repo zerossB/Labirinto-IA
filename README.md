@@ -31,8 +31,13 @@ Temos uma pequena estrutura básica de arquivos.
 
 ## AUTHORS
 [@CharlesSantos2018](https://github.com/CharlesSantos2018)
+
 [@DouglasCalora](https://github.com/DouglasCalora)
+
 [@eliasassuncao](https://github.com/eliasassuncao)
+
 [@zerossb](https://github.com/leonfpontes)
+
 [@leonfpontes](https://github.com/leonfpontes)
+
 [@Sam753](https://github.com/Sam753)
