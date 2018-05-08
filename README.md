@@ -30,23 +30,9 @@ Temos uma pequena estrutura básica de arquivos.
     - Contem as Imagens com a resposta, separadas pelo metodo de busca (#TODO)
 
 ## AUTHORS
-[@]()
+[@CharlesSantos2018](https://github.com/CharlesSantos2018)
 [@DouglasCalora](https://github.com/DouglasCalora)
 [@eliasassuncao](https://github.com/eliasassuncao)
 [@zerossb](https://github.com/leonfpontes)
 [@leonfpontes](https://github.com/leonfpontes)
-[@]()
-=======
-    - Contem as Imagens com a resposta, separadas pelo metodo de busca
-
-
-## TODO
-- [x] Implementar Leitura de Imagem e Arrays
-- [x] Documentar
-- [x] Refatorar Código p/ Melhor desempenho
-- [x] Busca em Largura
-- [x] Busca em Profundidade
-- [x] Custo Uniforme
-- [x] Gulosa (Greedy)
-- [x] A*
->>>>>>> 578e836114c519dc505b7136e472fc83cb48c2d8
+[@Sam753](https://github.com/Sam753)
