@@ -27,10 +27,10 @@ Temos uma pequena estrutura básica de arquivos.
 
 ## TODO
 - [x] Implementar Leitura de Imagem e Arrays
-- [ ] Documentar
+- [x] Documentar
 - [x] Refatorar Código p/ Melhor desempenho
 - [x] Busca em Largura
 - [x] Busca em Profundidade
-- [ ] Custo Uniforme
-- [ ] Gulosa (Greedy)
-- [ ] A*
+- [x] Custo Uniforme
+- [x] Gulosa (Greedy)
+- [x] A*
