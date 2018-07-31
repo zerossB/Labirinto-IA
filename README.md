@@ -52,3 +52,5 @@ Temos uma pequena estrutura básica de arquivos.
 - [x] Gulosa (Greedy)
 - [x] A*
 - [ ] Melhorias
+
+Teste Teams
